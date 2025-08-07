@@ -1,5 +1,5 @@
 import { motion } from "motion/react"
-import NavBar from "../components/navbar";
+import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";  
 import { SignedIn, SignedOut, SignInButton, SignOutButton, UserButton } from "@clerk/clerk-react";
 
