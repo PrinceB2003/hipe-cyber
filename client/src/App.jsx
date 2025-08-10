@@ -9,15 +9,7 @@ function App() {
   return ( 
     <> 
     <BrowserRouter> 
-      {/* <header>  
-        <SignedOut> 
-          <SignInButton/>
-        </SignedOut>
-
-        <SignedIn> 
-          <UserButton/>
-        </SignedIn>
-      </header> */}
+      
     
 
       <Routes> 

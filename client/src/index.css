@@ -15,6 +15,10 @@
 
 @theme {
   --font-Text: "League Spartan", sans-serif; 
+} 
+
+@theme{ 
+  --card-Shadow: -15px 15px 25px rgba(0, 102, 204, 0.5);
 }
 
 

@@ -21,7 +21,7 @@ const AnimatedBackGround = ({ children, className = "" }) => {
         {particles.map((particle, index) => (
           <div
             key={index}
-            className="absolute animate-float bg-[#F9F4F4]"
+            className="absolute animate-float bg-[#D1D1D1]"
             style={{
               left: particle.left,
               width: `${particle.size}px`,
