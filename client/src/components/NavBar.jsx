@@ -3,7 +3,7 @@ function NavBar({children}){
     return( 
         <> 
         <header className="bg-[#09090B] text-[#F9F4F4]"> 
-        <div className="flex justify-between pl-2 pt-4 pr-2 font-SubHeading text-2xl">   
+        <div className="flex justify-between items-center pl-2 pt-4 pr-2 font-SubHeading text-2xl">   
            <div> 
                 <img  
                     src="https://thehipe.org/wp-content/uploads/2025/04/HIPELOGO-filled-white.png" 
@@ -12,7 +12,7 @@ function NavBar({children}){
                 />
            </div>  
 
-           <div className="flex item-center gap-4"> 
+           <div className="flex  item-center gap-4"> 
             {children} 
            </div>
         </div>
