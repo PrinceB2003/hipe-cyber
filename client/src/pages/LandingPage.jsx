@@ -41,7 +41,7 @@ function LandingPage(){
 
                     <Link
                         to="/sign-up"
-                        className="font-SubHeading font-bold text-2xl rounded-full bg-[#0077CC]  
+                        className="font-SubHeading font-bold text-2xl rounded-full bg-[#00A6FB]  
                         h-1xl w-48 p-2 cursor-pointer hover:scale-125 transition flex items-center justify-center"
                     >
                         Sign Up
