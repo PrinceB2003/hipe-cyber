@@ -29,7 +29,7 @@ function LandingPage(){
             <div className="text-center"> 
                 <h2 className="font-SubHeading font-semibold text-5xl animate-pulse">Cybersecurity made simple for every CUNY student.</h2> 
             </div> 
-            <div className="flex justify-center gap-3">  
+            <div className="flex justify-center gap-8">  
                  <SignedOut>
                     <Link
                         to="/sign-in"
