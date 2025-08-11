@@ -11,6 +11,7 @@ import { Link } from 'react-router-dom';
 function LandingPage(){ 
     return ( 
         <> 
+    
         <NavBar className="">  
         <a href="#about" className="hover:text-[#00A6FB]"> About Us</a> 
         <a href="#mission" className="hover:text-[#00A6FB]" > Mission</a>    
@@ -22,7 +23,7 @@ function LandingPage(){
         </NavBar> 
     
     <AnimatedBackGround> 
-        <section id="hero" className="text-[#F9F4F4] min-h-screen w-full flex flex-col justify-center gap-6">  
+        <section id="hero" className=" text-[#F9F4F4] min-h-screen w-full flex flex-col justify-center gap-6">  
             <div className=" text-center "> 
                 <h1 className="font-Heading font-bold text-7xl">Welcome to HIPE-CYBER!</h1>  
             </div> 
@@ -50,7 +51,7 @@ function LandingPage(){
             </div> 
         </section> 
     </AnimatedBackGround>
-
+    
         <section id="about" className="bg-[#09090B] text-[#F9F4F4] text-center min-h-screen w-full flex flex-col items-center justify-center" > 
         <SlideInText> 
             <h1 className="font-SubHeading font-bold text-[#00A6FB] text-6xl mb-4">About Us</h1> 
@@ -69,8 +70,8 @@ function LandingPage(){
             </div>
         </SlideInText>
         </section> 
-
-        <section id="mission" className="bg-[#09090B] text-[#F9F4F4] text-center min-h-screen w-full flex flex-col items-center justify-center"> 
+    
+        <section id="mission" className=" bg-[#09090B] text-[#F9F4F4] text-center min-h-screen w-full flex flex-col items-center justify-center"> 
           <SlideInText>  
             <h1 className="font-SubHeading font-bold text-[#00A6FB] text-5xl mb-4">Our Mission</h1>    
             <div id="mission-container" className="flex"> 
@@ -88,7 +89,7 @@ function LandingPage(){
              </div>
            </SlideInText>  
         </section> 
-
+    
         <section id="values" className="bg-[#09090B] text-[#F9F4F4] text-center min-h-screen w-full flex flex-col items-center justify-center"> 
           <SlideInText> 
             <h1 className="font-SubHeading font-bold text-[#00A6FB] text-5xl mb-4"> Our Values</h1> 
@@ -97,12 +98,12 @@ function LandingPage(){
                     <LaptopMinimalCheck size={192} color={"#00A6FB"} />
                     <p>Convenience: We make it simple for students to find what they need without wasting time. </p>
                 </div>
-                <div className="flex gap-4  items-center">  
+                <div className="flex gap-4 items-center">  
                   <Compass size={192} color={"#00A6FB"}/>  
                   <p>Ease of Use: Everything on our platform is designed to be clear and user-friendly. </p>  
                 </div>
                   
-                <div className="flex gap-4  items-center"> 
+                <div className="flex gap-4 items-center"> 
                     <Globe size={192} color={"#00A6FB"}/>
                     <p>Accessibility: We welcome all students, whether you’re just starting out or already have some experience. </p>   
                 </div>
@@ -110,7 +111,7 @@ function LandingPage(){
             </div> 
           </SlideInText>
         </section> 
-
+   
         <section id="features" className="bg-[#09090B] text-[#F9F4F4] min-h-screen w-full  pl-2 pr-2"> 
            <SlideInText> 
             <h1 className="font-SubHeading font-bold text-[#00A6FB] text-5xl text-center mb-4">Our Features</h1> 
@@ -178,8 +179,15 @@ function LandingPage(){
             </div> 
           </SlideInText>
         </section>
-
-        <Footer />
+    
+        <Footer className="flex w-full"> 
+        <a href="/" className="hover:text-[#00A6FB]"> Home</a>
+        <a href="#about" className="hover:text-[#00A6FB]"> About Us</a> 
+        <a href="#mission" className="hover:text-[#00A6FB]" > Mission</a>    
+        <a href="#values" className="hover:text-[#00A6FB]"> Values</a>  
+        <a href="#features" className="hover:text-[#00A6FB]"> Features</a>
+        </Footer> 
+    
         
         </>
 
