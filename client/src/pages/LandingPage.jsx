@@ -11,7 +11,6 @@ import { Link } from 'react-router-dom';
 function LandingPage(){ 
     return ( 
         <> 
-    
         <NavBar className="">  
         <a href="#about" className="hover:text-[#00A6FB]"> About Us</a> 
         <a href="#mission" className="hover:text-[#00A6FB]" > Mission</a>    
@@ -31,10 +30,22 @@ function LandingPage(){
                 <h2 className="font-SubHeading font-semibold text-5xl animate-pulse">Cybersecurity made simple for every CUNY student.</h2> 
             </div> 
             <div className="flex justify-center gap-3">  
-                <SignedOut> 
-                    <SignInButton className="font-SubHeading font-bold text-2xl rounded-full bg-[#00A6FB]  
-                                            h-1xl w-48 p-2 cursor-pointer hover:scale-125 transition  ">  
-                                    </SignInButton>    
+                 <SignedOut>
+                    <Link
+                        to="/sign-in"
+                        className="font-SubHeading font-bold text-2xl rounded-full bg-[#00A6FB]  
+                        h-1xl w-48 p-2 cursor-pointer hover:scale-125 transition flex items-center justify-center"
+                    >
+                         Sign In
+                    </Link>
+
+                    <Link
+                        to="/sign-up"
+                        className="font-SubHeading font-bold text-2xl rounded-full bg-[#0077CC]  
+                        h-1xl w-48 p-2 cursor-pointer hover:scale-125 transition flex items-center justify-center"
+                    >
+                        Sign Up
+                    </Link>
                 </SignedOut>
             </div> 
         </section> 
