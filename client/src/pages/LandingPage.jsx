@@ -4,7 +4,8 @@ import Footer from "../components/Footer";
 import HeroCard from "../components/HeroCard";
 import AnimatedBackGround from "../components/AnimatedBackGround";
 import { SignedIn, SignedOut, SignInButton, SignOutButton, UserButton } from "@clerk/clerk-react";
-import SlideInText from "../components/SlideInText";
+import SlideInText from "../components/SlideInText"; 
+import {ShieldUser,LaptopMinimalCheck,Compass,Globe,GlobeLock} from 'lucide-react';
 
 function LandingPage(){ 
     return ( 
@@ -41,27 +42,38 @@ function LandingPage(){
         <section id="about" className="bg-[#09090B] text-[#F9F4F4] text-center min-h-screen w-full flex flex-col items-center justify-center" > 
         <SlideInText> 
             <h1 className="font-SubHeading font-bold text-[#00A6FB] text-6xl mb-4">About Us</h1> 
-            <div className="h-xl w-3xl text-wrap place-self-center"> 
-                <p className="font-Text font-medium text-[#F9F4F4] text-center text-2xl "> 
-                    Our platform is built for CUNY students of all majors and experience levels, making it easy to learn about cybersecurity in a way that fits your interests.  
-                    By creating a profile with your background, goals, and skills, you’ll get content that’s relevant to you.  
-                    Stay updated with organized news on topics like malware, vulnerabilities, compliance, and more. Additional features like learning resources, career tools,  
-                    and a student forum are on the horizon to support you even further on your journey.
-                </p> 
-            </div> 
+            <div id="about-container" className="flex ">  
+                <div> 
+                    <ShieldUser size={256} color={"#00A6FB"}/>
+                </div>
+                <div className="h-xl w-3xl text-wrap place-self-center"> 
+                    <p className="font-Text font-medium text-[#F9F4F4] text-center text-2xl "> 
+                        Our platform is built for CUNY students of all majors and experience levels, making it easy to learn about cybersecurity in a way that fits your interests.  
+                        By creating a profile with your background, goals, and skills, you’ll get content that’s relevant to you.  
+                        Stay updated with organized news on topics like malware, vulnerabilities, compliance, and more. Additional features like learning resources, career tools,  
+                        and a student forum are on the horizon to support you even further on your journey.
+                    </p> 
+                </div>  
+            </div>
         </SlideInText>
         </section> 
 
         <section id="mission" className="bg-[#09090B] text-[#F9F4F4] text-center min-h-screen w-full flex flex-col items-center justify-center"> 
           <SlideInText>  
-            <h1 className="font-SubHeading font-bold text-[#00A6FB] text-5xl mb-4">Our Mission</h1>  
-            <div className="font-Text font-medium text-2xl h-xl w-3xl text-wrap place-self-center"> 
-                <p>  
-                    Our mission is to help CUNY students learn about cybersecurity in a way that is simple and convenient.  
-                    We aim to create a space where all students can grow, no matter their major, background, or skill level.  
-                    Everything we do is focused on making cybersecurity easier to explore and understand. 
-                </p> 
-            </div> 
+            <h1 className="font-SubHeading font-bold text-[#00A6FB] text-5xl mb-4">Our Mission</h1>    
+            <div id="mission-container" className="flex"> 
+                <div class>  
+                    <GlobeLock size={192} color={"#00A6FB"}/>
+                </div>
+            
+                <div className="font-Text font-medium text-2xl h-xl w-3xl text-wrap place-self-center"> 
+                    <p>  
+                        Our mission is to help CUNY students learn about cybersecurity in a way that is simple and convenient.  
+                        We aim to create a space where all students can grow, no matter their major, background, or skill level.  
+                        Everything we do is focused on making cybersecurity easier to explore and understand. 
+                    </p> 
+                </div>  
+             </div>
            </SlideInText>  
         </section> 
 
@@ -69,10 +81,21 @@ function LandingPage(){
           <SlideInText> 
             <h1 className="font-SubHeading font-bold text-[#00A6FB] text-5xl mb-4"> Our Values</h1> 
             <div className="font-Text font-medium text-2xl h-xl w-3xl text-wrap place-self-center"> 
-                <p>Convenience: We make it simple for students to find what they need without wasting time. </p> 
-                <p>Ease of Use: Everything on our platform is designed to be clear and user-friendly. </p> 
-                <p>Accessibility: We welcome all students, whether you’re just starting out or already have some experience. </p> 
-            </div>
+                <div className="flex gap-4 items-center"> 
+                    <LaptopMinimalCheck size={192} color={"#00A6FB"} />
+                    <p>Convenience: We make it simple for students to find what they need without wasting time. </p>
+                </div>
+                <div className="flex gap-4  items-center">  
+                  <Compass size={192} color={"#00A6FB"}/>  
+                  <p>Ease of Use: Everything on our platform is designed to be clear and user-friendly. </p>  
+                </div>
+                  
+                <div className="flex gap-4  items-center"> 
+                    <Globe size={192} color={"#00A6FB"}/>
+                    <p>Accessibility: We welcome all students, whether you’re just starting out or already have some experience. </p>   
+                </div>
+                 
+            </div> 
           </SlideInText>
         </section> 
 
@@ -90,7 +113,7 @@ function LandingPage(){
                         </p>
                     </div>
                     <div className="h-12 flex flex-col item-center"> 
-                         <a className="font-Text font-medium text-center rounded-full bg-[#00A6FB] h-1xl w-36 cursor-pointer hover:scale-125 transition">Learn more</a>
+                         <a href="/under-construction"className="font-Text font-medium text-center rounded-full bg-[#00A6FB] h-1xl w-36 cursor-pointer hover:scale-125 transition">Learn more</a>
                     </div>  
                 </HeroCard> 
                 <HeroCard> 
@@ -105,7 +128,7 @@ function LandingPage(){
                     </div>
                        
                     <div className="h-12 flex flex-col item-center"> 
-                        <a className="font-Text font-medium text-center rounded-full bg-[#00A6FB] h-1xl w-36 cursor-pointer hover:scale-125 transition">Learn more</a>    
+                        <a href="/under-construction" className="font-Text font-medium text-center rounded-full bg-[#00A6FB] h-1xl w-36 cursor-pointer hover:scale-125 transition">Learn more</a>    
                     </div>
                 
                 </HeroCard> 
@@ -121,7 +144,7 @@ function LandingPage(){
                     </div>
                          
                     <div className="h-12 flex flex-col item-center"> 
-                        <a className="font-Text font-medium text-center rounded-full bg-[#00A6FB] h-1xl w-36 cursor-pointer hover:scale-125 transition">Learn more</a>
+                        <a href="/under-construction" className="font-Text font-medium text-center rounded-full bg-[#00A6FB] h-1xl w-36 cursor-pointer hover:scale-125 transition">Learn more</a>
                     </div>
                      
                 </HeroCard>
