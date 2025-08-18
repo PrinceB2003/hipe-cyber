@@ -7,8 +7,24 @@ import { SignedIn, SignedOut, SignInButton, SignOutButton, UserButton } from "@c
 import SlideInText from "../components/SlideInText"; 
 import {ShieldUser,LaptopMinimalCheck,Compass,Globe,GlobeLock} from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { useClerk } from '@clerk/clerk-react';
 
-function LandingPage(){ 
+
+function LandingPage(){  
+    const { signOut } = useClerk();
+    const navigate = useNavigate();  
+
+    const handleSignOut = async () => {
+        try {
+            await signOut();
+            navigate('/'); 
+        } catch (error) {
+            console.error('Error signing out:', error);
+        }
+    }; 
+
+
     return ( 
         <> 
     
@@ -17,8 +33,19 @@ function LandingPage(){
         <a href="#mission" className="hover:text-[#00A6FB]" > Mission</a>    
         <a href="#values" className="hover:text-[#00A6FB]"> Values</a>  
         <a href="#features" className="hover:text-[#00A6FB]"> Features</a>
-        <SignedIn> 
-            <UserButton/>
+        <SignedIn>  
+            <Link 
+                to="/profile" 
+                className="hover:text-[#00A6FB]"
+            >   
+                Your Profile
+            </Link>
+            <button 
+                onClick={handleSignOut} 
+                className="hover:text-[#00A6FB] cursor-pointer bg-transparent border-none text-inherit"
+                > 
+                Sign Out
+            </button>
         </SignedIn>
         </NavBar> 
     
@@ -46,7 +73,8 @@ function LandingPage(){
                         h-1xl w-48 p-2 cursor-pointer hover:scale-125 transition flex items-center justify-center"
                     >
                         Sign Up
-                    </Link>
+                    </Link> 
+
                 </SignedOut>
             </div> 
         </section> 
