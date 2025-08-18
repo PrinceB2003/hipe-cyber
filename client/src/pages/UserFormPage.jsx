@@ -207,6 +207,7 @@ function UserFormPage(){
                                 <option value="Computer Engineering">Computer Engineering</option>
                                 <option value="Computer Science">Computer Science</option>
                                 <option value="Criminal Justice">Criminal Justice</option>
+                                <option value="Cybersecurity">Cybersecurity</option>
                                 <option value="Data Science">Data Science</option>
                                 <option value="Dentistry">Dentistry</option>
                                 <option value="Design">Design</option>
