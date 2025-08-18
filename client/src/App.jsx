@@ -48,20 +48,27 @@ function App() {
     console.log("App component rendering");
 
     // Component to check form completion and redirects
-    const FormChecker = () => {
-        const { hasPreferences, hasCheckedPreferences, isLoading } = useUserPreferences();
+const FormChecker = () => {
+    const { isSignedIn, isLoaded } = useUser(); // Add this line
+    const { hasPreferences, hasCheckedPreferences, isLoading } = useUserPreferences();
 
-        if (isLoading || !hasCheckedPreferences) {
-            return <div>Loading preferences...</div>;
-        }
+    // Wait for both auth and preferences to load
+    if (!isLoaded || isLoading || !hasCheckedPreferences) {
+        return <div>Loading preferences...</div>;
+    }
 
-        // If form is not completed, redirect to form
-        if (!hasPreferences) {
-            return <Navigate to="/user-form" replace />;
-        }
+    // If not signed in (shouldn't happen due to ProtectedRoute, but safety check)
+    if (!isSignedIn) {
+        return <Navigate to="/sign-in" replace />;
+    }
 
-        return <Navigate to="/" replace />;
-    };
+    // If form is not completed, redirect to form
+    if (!hasPreferences) {
+        return <Navigate to="/user-form" replace />;
+    }
+
+    return <Navigate to="/" replace />;
+};
 
     return (
         <BrowserRouter>
