@@ -8,6 +8,7 @@ import SignInPage from './pages/SignInPage';
 import SignUpPage from './pages/SignUpPage';
 import UserFormPage from './pages/UserFormPage';
 import { useUserPreferences } from './hooks/useUserPreferences';
+import { useState, useEffect } from 'react';
 
 // Simple ProtectedRoute component
 const ProtectedRoute = ({ children, requiresForm = false }) => {
