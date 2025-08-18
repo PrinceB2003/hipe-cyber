@@ -22,7 +22,6 @@ const ProtectedRoute = ({ children, requiresForm = false }) => {
         return <Navigate to="/sign-in" replace />;
     }
     
-  
     if (requiresForm) {
         return <FormProtectedRoute>{children}</FormProtectedRoute>;
     }
@@ -45,17 +44,13 @@ const FormProtectedRoute = ({ children }) => {
     return children;
 };
 
-function App() {
-    console.log("App component rendering");
 
-    // Component to check form completion and redirects
-    const FormChecker = () => {
+const FormChecker = () => {
     const { isSignedIn, isLoaded } = useUser();
     const { hasPreferences, hasCheckedPreferences, isLoading } = useUserPreferences();
     const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
-        // Small delay to ensure everything is loaded
         const timer = setTimeout(() => setMounted(true), 100);
         return () => clearTimeout(timer);
     }, []);
@@ -74,6 +69,9 @@ function App() {
 
     return <Navigate to="/" replace />;
 };
+
+function App() {
+    console.log("App component rendering");
 
     return (
         <BrowserRouter>
@@ -118,6 +116,17 @@ function App() {
 }
 
 export default App;
+
+
+
+
+
+
+
+
+
+
+
 
 
 
