@@ -155,7 +155,7 @@ function LandingPage(){
                     </div>
                     <div className="h-12 flex flex-col item-center"> 
                         <Link
-                            to="/under-construction"
+                            to="/current-events"
                             className="font-Text font-medium text-center rounded-full bg-[#00A6FB] h-1xl w-36 cursor-pointer hover:scale-125 transition"
                         >
                             Learn more

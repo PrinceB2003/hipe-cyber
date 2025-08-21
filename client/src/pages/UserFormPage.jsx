@@ -20,6 +20,7 @@ function UserFormPage(){
         technicalExperience: "",
         technicalKnowledge: "",
         cybersecurityFamiliarity: "",
+        cybersecurityInterest: "",
     });
 
     // Memoize the load function to prevent unnecessary re-renders
@@ -51,6 +52,7 @@ function UserFormPage(){
                     technicalExperience: data.technical_experience || "",
                     technicalKnowledge: data.technical_knowledge || "",
                     cybersecurityFamiliarity: data.cybersecurity_familiarity || "",
+                    cybersecurityInterest: data.cybersecurity_interest || "",
                 });
             }
         } catch (err) {
@@ -99,6 +101,7 @@ function UserFormPage(){
                     technical_experience: form.technicalExperience,
                     technical_knowledge: form.technicalKnowledge,
                     cybersecurity_familiarity: form.cybersecurityFamiliarity,
+                    cybersecurity_interest: form.cybersecurityInterest,
                     updated_at: new Date().toISOString(),
                 }, {
                     onConflict: 'clerk_user_id' // Specify the conflict column
@@ -278,7 +281,38 @@ function UserFormPage(){
                         <option value="Research and Development">Research and Development</option>
                         <option value="Other">Other</option>
                     </select>  
-                </div>
+                </div> 
+
+
+                    <div className="flex flex-col gap-2 w-3/4 items-center pl-1 pr-1"> 
+                        <label htmlFor="cybersec-interest" className="font-SubHeading font-medium text-base text-[#09090B]">Area of cybersecurity interest</label> 
+                        <select id="cybersec-interest" value={form.cybersecurityInterest} onChange={(e)=>handleChange("cybersecurityInterest",e.target.value)} 
+                         name="cybersec-interest" className="bg-[#F9F4F4] text-[#09090B] border-2 border-[#09090B] w-11/12 rounded-sm"
+                        >   
+                            <option value="">No Selection</option>
+                            <option value="network-security">Network Security</option>
+                            <option value="cloud-security">Cloud Security</option>
+                            <option value="application-security">Application Security</option>
+                            <option value="information-security">Information Security</option>
+                            <option value="grc">Governance, Risk, and Compliance (GRC)</option>
+                            <option value="soc">Security Operations (SOC)</option>
+                            <option value="incident-response">Incident Response</option>
+                            <option value="threat-hunting">Threat Hunting</option>
+                            <option value="penetration-testing">Penetration Testing / Ethical Hacking</option>
+                            <option value="red-team">Red Team Operations</option>
+                            <option value="blue-team">Blue Team Operations</option>
+                            <option value="digital-forensics">Digital Forensics</option>
+                            <option value="iam">Identity and Access Management (IAM)</option>
+                            <option value="cryptography">Cryptography</option>
+                            <option value="malware-analysis">Malware Analysis</option>
+                            <option value="endpoint-security">Endpoint Security</option>
+                            <option value="vulnerability-management">Vulnerability Management</option>
+                            <option value="devsecops">DevSecOps</option>
+                            <option value="iot-security">IoT Security</option>
+                            <option value="policy-strategy">Cybersecurity Policy and Strategy</option>
+                        </select>
+
+                    </div>
 
                     <div className="flex flex-col gap-2 w-3/4 items-center pl-1 pr-1"> 
                         <label htmlFor="career-goals" className="font-SubHeading font-medium text-base">What are your career goals?</label> 

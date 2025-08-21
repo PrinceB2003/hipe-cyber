@@ -7,8 +7,10 @@ import InProgressPage from './pages/InProgressPage';
 import SignInPage from './pages/SignInPage';
 import SignUpPage from './pages/SignUpPage';
 import UserFormPage from './pages/UserFormPage';
+import CurrentEventPage from './pages/CurrentEventPage';
 import { useUserPreferences } from './hooks/useUserPreferences';
 import { useState, useEffect } from 'react';
+
 
 // Simple ProtectedRoute component
 const ProtectedRoute = ({ children, requiresForm = false }) => {
@@ -80,7 +82,8 @@ function App() {
                 <Route path="/under-construction" element={<InProgressPage />} />
                 <Route path="/sign-in" element={<SignInPage />} />
                 <Route path="/sign-up" element={<SignUpPage />} />
-                
+                <Route path="/current-events" element={<CurrentEventPage/>} /> 
+
                 {/* Protected routes */}
                 <Route 
                     path="/profile" 

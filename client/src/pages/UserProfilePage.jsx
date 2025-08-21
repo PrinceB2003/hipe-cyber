@@ -58,6 +58,34 @@ function UserProfilePage(){
         return mapping[value] || value || 'N/A';
     };
 
+
+
+    const getCybersecurityInterestDisplay = (value) => {
+    const mapping = {
+        'network-security': 'Network Security',
+        'cloud-security': 'Cloud Security',
+        'application-security': 'Application Security',
+        'information-security': 'Information Security',
+        'grc': 'Governance, Risk, and Compliance (GRC)',
+        'soc': 'Security Operations (SOC)',
+        'incident-response': 'Incident Response',
+        'threat-hunting': 'Threat Hunting',
+        'penetration-testing': 'Penetration Testing / Ethical Hacking',
+        'red-team': 'Red Team Operations',
+        'blue-team': 'Blue Team Operations',
+        'digital-forensics': 'Digital Forensics',
+        'iam': 'Identity and Access Management (IAM)',
+        'cryptography': 'Cryptography',
+        'malware-analysis': 'Malware Analysis',
+        'endpoint-security': 'Endpoint Security',
+        'vulnerability-management': 'Vulnerability Management',
+        'devsecops': 'DevSecOps',
+        'iot-security': 'IoT Security',
+        'policy-strategy': 'Cybersecurity Policy and Strategy'
+        };
+        return mapping[value] || value || 'N/A';
+    };
+
     const handleUpdatePreferences = () => {
         navigate('/user-form', { 
             state: { 
@@ -105,7 +133,7 @@ function UserProfilePage(){
                      
                     <SlideInText> 
                         <div id="profile-container"  
-                        className="h-[55rem] w-[60rem] bg-[#F9F4F4] text-[#09090B] rounded-2xl flex flex-col justify-center items-center gap-8"> 
+                        className="h-[56rem] w-[60rem] bg-[#F9F4F4] text-[#09090B] rounded-2xl flex flex-col justify-center items-center gap-8"> 
                             <div className="mt-8 pl-4 pr-4 "> 
                                 <h1 className="font-Heading font-bold text-5xl">Your Profile</h1> 
                             </div> 
@@ -143,7 +171,14 @@ function UserProfilePage(){
                                  <p className="font-Text font-medium text-2xl">  
                                     Interested Industry: {preferences?.interested_industry || 'N/A'}
                                  </p>
-                            </div> 
+                            </div>  
+
+
+                            <div className="pl-4 pr-4"> 
+                                <p className="font-Text font-medium text-2xl"> 
+                                    Cybersecurity Interest: {getCybersecurityInterestDisplay(preferences?.cybersecurity_interest)}
+                                </p>
+                            </div>
 
                             <div className="pl-4 pr-4"> 
                                  <p className="font-Text font-medium text-2xl ">  
@@ -169,7 +204,7 @@ function UserProfilePage(){
                                 </p>
                             </div>
         
-                            <div className="pl-4 pr-4 mb-4"> 
+                            <div className="pl-4 pr-4 mb-8"> 
                                 <button 
                                     onClick={handleUpdatePreferences} 
                                     className="font-SubHeading font-semibold text-2xl rounded-full bg-[#00A6FB]  
