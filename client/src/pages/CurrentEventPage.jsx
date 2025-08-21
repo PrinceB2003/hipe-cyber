@@ -6,11 +6,11 @@ function CurrentEventPage(){
 
     return ( 
             <> 
-                <NavBar> 
+                <NavBar className="mb-16"> 
                     <a href="/" className="hover:text-[#00A6FB]"> Home</a> 
                 </NavBar>
                <div id="container">  
-                <h1 className="text-5xl text-[#F9F4F4] text-center font-Heading font-bold mt-4 ">Stay informed with the latest cybersecurity news </h1>
+                <h1 className="text-5xl text-[#F9F4F4] text-center font-Heading font-bold mt-4 mb-8 animate-pulse ">Stay informed with the latest cybersecurity news </h1>
                     <div id="malware" className="mt-4 mb-4"> 
                         <div> 
                             <h1 className="text-center text-5xl text-[#F9F4F4] text-center font-SubHeading font-bold mt-8 mb-8"> Malware </h1>
