@@ -1,5 +1,11 @@
+import NavBar from '../components/NavBar';
 export default function Tos() {
-  return (
+  return ( 
+    <> 
+    <NavBar>
+        <a href="/" className="hover:text-[#00A6FB]">Home</a>
+      </NavBar>
+      
     <div className="p-6 max-w-4xl mx-auto bg-[#09090B] text-[#F9F4F4]">
       <h1 className="text-3xl mb-4 font-bold">Terms of Service</h1>
       <p className="mb-6">Effective Date: August 20, 2025</p>
@@ -106,6 +112,8 @@ export default function Tos() {
       <p className="mt-8 font-semibold">
         By using our Services, you acknowledge that you have read, understood, and agree to these Terms of Service.
       </p>
-    </div>
+    </div> 
+    
+    </>
   );
 }
