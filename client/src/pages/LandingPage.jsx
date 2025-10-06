@@ -5,7 +5,7 @@ import HeroCard from "../components/HeroCard";
 import AnimatedBackGround from "../components/AnimatedBackGround";
 import { SignedIn, SignedOut, SignInButton, SignOutButton, UserButton } from "@clerk/clerk-react";
 import SlideInText from "../components/SlideInText"; 
-import {ShieldUser,LaptopMinimalCheck,Compass,Globe,GlobeLock} from 'lucide-react';
+import {ShieldUser,ShieldCheck,Handshake,Compass,Globe,GlobeLock} from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { useClerk } from '@clerk/clerk-react';
@@ -123,11 +123,11 @@ function LandingPage(){
             <h1 className="font-SubHeading font-bold text-[#00A6FB] text-5xl mb-4"> Our Values</h1> 
             <div className="font-Text font-medium text-2xl h-xl w-3xl text-wrap place-self-center"> 
                 <div className="flex gap-4 items-center"> 
-                    <LaptopMinimalCheck size={192} color={"#00A6FB"} />
+                    <ShieldCheck size={192} color={"#00A6FB"} />
                     <p>Integrity: We stay honest in everything we do, from how we learn security to how we treat each other. </p>
                 </div>
                 <div className="flex gap-4 items-center">  
-                  <Compass size={192} color={"#00A6FB"}/>  
+                  <Handshake size={192} color={"#00A6FB"}/>  
                   <p>Collaboration: We support each other's growth by working together, sharing resources, and tackling challenges as one community.</p>  
                 </div>
                   
