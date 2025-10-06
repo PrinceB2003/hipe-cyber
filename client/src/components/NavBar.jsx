@@ -2,7 +2,7 @@
 function NavBar({children}){ 
     return( 
         <> 
-        <header className="bg-[#09090B] text-[#F9F4F4]"> 
+        <header className="bg-[#09090B] text-[#F9F4F4] fixed top-0 z-50 w-full "> 
         <div className="flex justify-between items-center pl-4 pt-4 pr-2 font-SubHeading text-2xl">   
            <div>  
                <a href="/"> 

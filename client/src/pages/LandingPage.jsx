@@ -124,87 +124,135 @@ function LandingPage(){
             <div className="font-Text font-medium text-2xl h-xl w-3xl text-wrap place-self-center"> 
                 <div className="flex gap-4 items-center"> 
                     <LaptopMinimalCheck size={192} color={"#00A6FB"} />
-                    <p>Convenience: We make it simple for students to find what they need without wasting time. </p>
+                    <p>Integrity: We stay honest in everything we do, from how we learn security to how we treat each other. </p>
                 </div>
                 <div className="flex gap-4 items-center">  
                   <Compass size={192} color={"#00A6FB"}/>  
-                  <p>Ease of Use: Everything on our platform is designed to be clear and user-friendly. </p>  
+                  <p>Collaboration: We support each other's growth by working together, sharing resources, and tackling challenges as one community.</p>  
                 </div>
                   
                 <div className="flex gap-4 items-center"> 
                     <Globe size={192} color={"#00A6FB"}/>
-                    <p>Accessibility: We welcome all students, whether you’re just starting out or already have some experience. </p>   
+                    <p>Inclusivity: We welcome all CUNY students, regardless of background, major, or experience level—everyone has a place here. </p>   
                 </div>
                  
             </div> 
           </SlideInText>
         </section> 
    
-        <section id="features" className="bg-[#09090B] text-[#F9F4F4] min-h-screen w-full  pl-2 pr-2"> 
+        <section id="features" className="bg-[#09090B] text-[#F9F4F4] min-h-screen w-full pl-2 pr-2"> 
            <SlideInText> 
             <h1 className="font-SubHeading font-bold text-[#00A6FB] text-5xl text-center mb-4">Our Features</h1> 
-            <div id="feature-container" className="flex justify-center gap-12 pt-2"> 
-                <HeroCard> 
-                    <div className="h-12 pt-3"> 
-                        <h2 className="font-SubHeading font-bold text-2xl">Current Events</h2> 
-                    </div> 
-                    <div className="h-48"> 
-                        <p className="font-Text font-medium text-xl text-center mb-1">
-                            Stay updated on cybersecurity news, key threats, and tools relevant to CUNY students and future professionals.  
-                        </p>
-                    </div>
-                    <div className="h-12 flex flex-col item-center"> 
-                        <Link
-                            to="/current-events"
-                            className="font-Text font-medium text-center rounded-full bg-[#00A6FB] h-1xl w-36 cursor-pointer hover:scale-125 transition"
-                        >
-                            Learn more
-                        </Link>
-                    </div>  
-                </HeroCard> 
-                <HeroCard> 
-                    <div className="h-12 pt-3"> 
-                       <h2 className="font-SubHeading font-bold text-2xl">Forum</h2>  
-                    </div> 
-                    <div className="h-48"> 
-                         <p className="font-Text font-medium text-xl text-center mb-1">
-                            Join our forum to connect with other students.
-                            Ask questions, share ideas, and learn together about cybersecurity topics and careers.
-                        </p>  
-                    </div>
-                       
-                    <div className="h-12 flex flex-col item-center"> 
-                        <Link
-                            to="/under-construction"
-                            className="font-Text font-medium text-center rounded-full bg-[#00A6FB] h-1xl w-36 cursor-pointer hover:scale-125 transition"
-                        >
-                            Learn more
-                        </Link>    
-                    </div>
+            <div id="feature-container" className="flex flex-col justify-center  pt-2"> 
+                <div id="top-row" className="flex gap-6 mb-4">  
+                    <HeroCard> 
+                        <div className="h-12 pt-3"> 
+                            <h2 className="font-SubHeading font-bold text-2xl">Current Events</h2> 
+                        </div> 
+                        <div className="h-48"> 
+                            <p className="font-Text font-medium text-xl text-center mb-1">
+                                Stay updated on cybersecurity news, key threats, and tools relevant to CUNY students and future professionals.  
+                            </p>
+                        </div>
+                        <div className="h-12 flex flex-col item-center"> 
+                            <Link
+                                to="/current-events"
+                                className="font-Text font-medium text-center rounded-full bg-[#00A6FB] h-1xl w-36 cursor-pointer hover:scale-125 transition"
+                            >
+                                Learn more
+                            </Link>
+                        </div>  
+                    </HeroCard> 
+                    <HeroCard> 
+                        <div className="h-12 pt-3"> 
+                        <h2 className="font-SubHeading font-bold text-2xl">Forum</h2>  
+                        </div> 
+                        <div className="h-48"> 
+                            <p className="font-Text font-medium text-xl text-center mb-1">
+                                Join our forum to connect with other students.
+                                Ask questions, share ideas, and learn together about cybersecurity topics and careers.
+                            </p>  
+                        </div>
+                        
+                        <div className="h-12 flex flex-col item-center"> 
+                            <Link
+                                to="/under-construction"
+                                className="font-Text font-medium text-center rounded-full bg-[#00A6FB] h-1xl w-36 cursor-pointer hover:scale-125 transition"
+                            >
+                                Learn more
+                            </Link>    
+                        </div>
+                    </HeroCard> 
                 
-                </HeroCard> 
-                <HeroCard> 
-                    <div className="h-12 pt-3"> 
-                      <h2 className="font-SubHeading font-bold text-2xl">Learn</h2>    
-                    </div> 
-                    <div className="h-48"> 
-                        <p className="font-Text font-medium text-xl text-center mb-1">
-                            Get personalized learning resources based on what the community needs.
-                            Explore topics, improve skills, and grow your cybersecurity knowledge.   
-                        </p>
-                    </div>
-                         
-                    <div className="h-12 flex flex-col item-center"> 
-                        <Link
-                            to="/under-construction"
-                            className="font-Text font-medium text-center rounded-full bg-[#00A6FB] h-1xl w-36 cursor-pointer hover:scale-125 transition"
-                        >
-                            Learn more
-                        </Link>
-                    </div>
-                     
-                </HeroCard>
+                    <HeroCard> 
+                        <div className="h-12 pt-3"> 
+                        <h2 className="font-SubHeading font-bold text-2xl">Learn</h2>    
+                        </div> 
+                        <div className="h-48"> 
+                            <p className="font-Text font-medium text-xl text-center mb-1">
+                                Get personalized learning resources based on what the community needs.
+                                Explore topics, improve skills, and grow your cybersecurity knowledge.   
+                            </p>
+                        </div>
+                            
+                        <div className="h-12 flex flex-col item-center"> 
+                            <Link
+                                to="/under-construction"
+                                className="font-Text font-medium text-center rounded-full bg-[#00A6FB] h-1xl w-36 cursor-pointer hover:scale-125 transition"
+                            >
+                                Learn more
+                            </Link>
+                        </div>
+                        
+                    </HeroCard> 
+                </div>
+               <div id="bottom-row" className="flex gap-6 mb-8">
+                    <HeroCard> 
+                        <div className="h-12 pt-3"> 
+                        <h2 className="font-SubHeading font-bold text-2xl">Get Involved</h2>    
+                        </div> 
+                        <div className="h-48"> 
+                            <p className="font-Text font-medium text-xl text-center mb-1">
+                                Get personalized learning resources based on what the community needs.
+                                Explore topics, improve skills, and grow your cybersecurity knowledge.   
+                            </p>
+                        </div>
+                            
+                        <div className="h-12 flex flex-col item-center"> 
+                            <Link
+                                to="/under-construction"
+                                className="font-Text font-medium text-center rounded-full bg-[#00A6FB] h-1xl w-36 cursor-pointer hover:scale-125 transition"
+                            >
+                                Learn more
+                            </Link>
+                        </div>
+                        
+                    </HeroCard> 
+
+                    <HeroCard> 
+                        <div className="h-12 pt-3"> 
+                        <h2 className="font-SubHeading font-bold text-2xl">Roadmaps</h2>    
+                        </div> 
+                        <div className="h-48"> 
+                            <p className="font-Text font-medium text-xl text-center mb-1">
+                                Get personalized learning resources based on what the community needs.
+                                Explore topics, improve skills, and grow your cybersecurity knowledge.   
+                            </p>
+                        </div>
+                            
+                        <div className="h-12 flex flex-col item-center"> 
+                            <Link
+                                to="/under-construction"
+                                className="font-Text font-medium text-center rounded-full bg-[#00A6FB] h-1xl w-36 cursor-pointer hover:scale-125 transition"
+                            >
+                                Learn more
+                            </Link>
+                        </div>
+                        
+                    </HeroCard>
+                </div>
             </div> 
+            
           </SlideInText>
         </section>
     
