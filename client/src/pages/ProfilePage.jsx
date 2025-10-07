@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import { supabase } from "../lib/supabase";
 import { useClerk } from '@clerk/clerk-react';
 import { useUser } from '@clerk/clerk-react';
+import EventCard from "../components/EventCard";
 
 function ProfilePage() { 
         const { signOut } = useClerk(); 
@@ -552,7 +553,51 @@ function ProfilePage() {
                     <div> 
                         <h1 className="font-SubHeading text-center text-2xl">Your Events</h1>
                     </div> 
-                    <hr></hr>
+                    <hr></hr> 
+
+                    <div id="event-card-container" className=" flex justify-center gap-4 mt-4 pl-4"> 
+                        <EventCard> 
+                            <div> 
+                                <h1 className="text-[#F9F4F4] text-center">Event#1</h1> 
+                                <p> This is some event description.</p>
+                                <p>Location: Zoom</p>
+                            </div> 
+                            <div> 
+                                <button className="font-text font-semibold text-sm rounded-full bg-[#00A6FB]  
+                                                            text-[#F9F4F4] h-12 w-fit p-2 cursor-pointer"> 
+                                                Cancel Event 
+                                        </button>    
+                            </div>
+                        </EventCard> 
+
+                        <EventCard> 
+                            <div> 
+                                <h1 className="text-[#F9F4F4] text-center">Event#2</h1> 
+                                <p> This is some event description.</p>
+                                <p>Location: Zoom</p>
+                            </div> 
+                            <div> 
+                                <button className="font-text font-semibold text-sm rounded-full bg-[#00A6FB]  
+                                                            text-[#F9F4F4] h-12 w-fit p-2 cursor-pointer"> 
+                                                Cancel Event 
+                                        </button>      
+                            </div>
+                        </EventCard> 
+
+                        <EventCard> 
+                            <div> 
+                                <h1 className="text-[#F9F4F4] text-center">Event#3</h1> 
+                                <p> This is some event description.</p>
+                                <p>Location: Zoom</p>
+                            </div> 
+                            <div> 
+                                <button className="font-text font-semibold text-sm rounded-full bg-[#00A6FB]  
+                                                            text-[#F9F4F4] h-12 w-fit p-2 cursor-pointer"> 
+                                                Cancel Event 
+                                        </button>      
+                            </div>
+                        </EventCard>
+                    </div>
                 </div>
 
 

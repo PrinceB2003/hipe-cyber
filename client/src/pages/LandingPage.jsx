@@ -213,8 +213,8 @@ function LandingPage(){
                         </div> 
                         <div className="h-48"> 
                             <p className="font-Text font-medium text-xl text-center mb-1">
-                                Get personalized learning resources based on what the community needs.
-                                Explore topics, improve skills, and grow your cybersecurity knowledge.   
+                                Find cybersecurity clubs and groups to join.  
+                                Connect with other CUNY students interested in security, attend events, and build your network.   
                             </p>
                         </div>
                             
@@ -235,8 +235,8 @@ function LandingPage(){
                         </div> 
                         <div className="h-48"> 
                             <p className="font-Text font-medium text-xl text-center mb-1">
-                                Get personalized learning resources based on what the community needs.
-                                Explore topics, improve skills, and grow your cybersecurity knowledge.   
+                                See where you're headed in cybersecurity.  
+                                Get clear steps for your role, track where you are, and know what's next.   
                             </p>
                         </div>
                             
