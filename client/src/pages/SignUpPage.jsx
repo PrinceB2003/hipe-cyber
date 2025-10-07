@@ -11,7 +11,8 @@ function SignUpPage() {
       </NavBar>
       <div className="flex justify-center items-center min-h-screen w-full bg-[#09090B]">
         <div className="flex flex-col items-center">
-          <SignUp forceRedirectUrl="/profile" />
+          <SignUp signUpForceRedirectUrl="/profile"
+                  fallbackRedirectUrl="/profile" />
           <p className="text-[#F9F4F4] text-sm mt-4 text-center">
             By agreeing to sign up, you agree to our{' '}
             <Link 
