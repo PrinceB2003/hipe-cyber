@@ -6,6 +6,7 @@ import { supabase } from "../lib/supabase";
 import { useClerk } from '@clerk/clerk-react';
 import { useUser } from '@clerk/clerk-react';
 import EventCard from "../components/EventCard";
+import { Link } from 'react-router-dom';
 
 function ProfilePage() { 
         const { signOut } = useClerk(); 
@@ -154,8 +155,8 @@ function ProfilePage() {
     return( 
         <>  
             <NavBar className=""> 
-                    <a href="/" className="hover:text-[#00A6FB]"> Home</a> 
-                    
+                    <a href="/" className="hover:text-[#00A6FB]"> Home</a>
+                    <Link to="/#features" className="hover:text-[#00A6FB]">Features</Link>
                     <button 
                         onClick={handleSignOut} 
                         className="hover:text-[#00A6FB] cursor-pointer bg-transparent border-none text-inherit"

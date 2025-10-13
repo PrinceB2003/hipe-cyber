@@ -11,6 +11,8 @@ import { useState, useEffect } from 'react';
 import Tos from './pages/Tos';
 import ProfilePage from './pages/ProfilePage';
 
+
+
 // Simple ProtectedRoute component
 const ProtectedRoute = ({ children, requiresForm = false }) => {
     const { isSignedIn, isLoaded } = useUser();
@@ -43,7 +45,7 @@ function App() {
                 <Route path="/under-construction" element={<InProgressPage />} />
                 <Route path="/sign-in" element={<SignInPage />} />
                 <Route path="/sign-up" element={<SignUpPage />} />
-                <Route path="/current-events" element={<CurrentEventPage/>} />   
+                <Route path="/current-events" element={<CurrentEventPage/>} />
                 <Route path="/tos" element={<Tos/>} />
 
                 {/* Protected routes */}

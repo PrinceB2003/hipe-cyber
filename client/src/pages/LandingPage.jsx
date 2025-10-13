@@ -9,6 +9,10 @@ import {ShieldUser,ShieldCheck,Handshake,Compass,Globe,GlobeLock} from 'lucide-r
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { useClerk } from '@clerk/clerk-react';
+import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+
+
 
 
 function LandingPage(){  
@@ -23,6 +27,14 @@ function LandingPage(){
             console.error('Error signing out:', error);
         }
     }; 
+
+    const location = useLocation();
+  
+    useEffect(() => {
+        if (location.hash === '#features') {
+        document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' });
+        }
+    }, [location]);
 
 
     return ( 
@@ -250,6 +262,28 @@ function LandingPage(){
                         </div>
                         
                     </HeroCard>
+                    <HeroCard> 
+                        <div className="h-12 pt-3"> 
+                        <h2 className="font-SubHeading font-bold text-2xl">Events</h2>    
+                        </div> 
+                        <div className="h-48"> 
+                            <p className="font-Text font-medium text-xl text-center mb-1">
+                                Learn together, grow together.  
+                                Create your own events or join sessions hosted by the community to build skills and connections.  
+                            </p>
+                        </div>
+                            
+                        <div className="h-12 flex flex-col item-center"> 
+                            <Link
+                                to="/under-construction"
+                                className="font-Text font-medium text-center rounded-full bg-[#00A6FB] h-1xl w-36 cursor-pointer hover:scale-125 transition"
+                            >
+                                Learn more
+                            </Link>
+                        </div>
+                        
+                    </HeroCard>
+
                 </div>
             </div> 
             
