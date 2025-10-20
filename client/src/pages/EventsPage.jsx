@@ -5,11 +5,15 @@ import { supabase } from "../lib/supabase";
 import { useUser } from "@clerk/clerk-react";
 import { useState, useEffect } from "react";
 import SlideInText from "../components/SlideInText";
+import { useClerk } from '@clerk/clerk-react';
 
 
 function EventsPage(){
     const [events, setEvents] = useState([]);
     const [loading, setLoading] = useState(true); 
+    const { signOut, isSignedIn } = useClerk();
+
+
 
     useEffect(() => {
         console.log('useEffect is running');
@@ -71,12 +75,14 @@ function EventsPage(){
             <>
             <NavBar> 
                 <a href="/" className="hover:text-[#00A6FB]"> Home</a>
+    
                     <Link to="/#features" className="hover:text-[#00A6FB]">Features</Link>
+
                     <button 
                         onClick={handleSignOut} 
                         className="hover:text-[#00A6FB] cursor-pointer bg-transparent border-none text-inherit"
                     > 
-                        Sign out
+                        {isSignedIn? "Sign out" : ""}
                     </button>
             </NavBar> 
         <SlideInText> 
@@ -89,12 +95,13 @@ function EventsPage(){
                         </div>
                         <div id="button-container" className="flex justify-center gap-6"> 
                             <div className="h-1xl w-36"> 
-                                <Link
-                                    to="/eventform"
+                                  <Link 
+                                    to={isSignedIn ? "/eventform" :"/sign-in"}
                                     className="flex items-center justify-center font-Text font-medium text-center text-[#F9F4F4] rounded-full bg-[#00A6FB] h-6 w-36 hover:scale-125 transition"
                                     >
-                                    Host
-                                </Link>
+                                    {isSignedIn? "Host":"Sign in to Host"}
+                                </Link>  
+                                
                             </div> 
                             <div> 
                                 <button className="flex items-center justify-center font-Text font-medium text-center text-[#F9F4F4] rounded-full bg-[#00A6FB] h-6 w-36 cursor-pointer hover:scale-125 transition">Search</button>
