@@ -10,8 +10,8 @@ import { useUserPreferences } from './hooks/useUserPreferences';
 import { useState, useEffect } from 'react';
 import Tos from './pages/Tos';
 import ProfilePage from './pages/ProfilePage';
-
-
+import EventsPage from './pages/EventsPage';
+import EventForm from './components/EventForm';
 
 // Simple ProtectedRoute component
 const ProtectedRoute = ({ children, requiresForm = false }) => {
@@ -46,6 +46,8 @@ function App() {
                 <Route path="/sign-in" element={<SignInPage />} />
                 <Route path="/sign-up" element={<SignUpPage />} />
                 <Route path="/current-events" element={<CurrentEventPage/>} />
+                <Route path="/events" element={<EventsPage/>}/>
+                <Route path="/eventform" element={<EventForm/>}/>
                 <Route path="/tos" element={<Tos/>} />
 
                 {/* Protected routes */}
