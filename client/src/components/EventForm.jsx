@@ -2,13 +2,15 @@
 import { supabase } from "../lib/supabase"; 
 import { useUser } from "@clerk/clerk-react";
 import { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
 
-console.log('Supabase client:', supabase); 
+// console.log('Supabase client:', supabase); 
 
 function EventForm(){ 
 
     const { user, isLoaded } = useUser();
     const [userId, setUserId] = useState(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (isLoaded && user) {
@@ -46,7 +48,7 @@ function EventForm(){
             return;
         }
 
-        console.log('userId at submit time:', user.id);
+        // console.log('userId at submit time:', user.id);
 
         const savedEventData ={ 
             clerk_user_id: user.id,
@@ -76,7 +78,8 @@ function EventForm(){
         }
 
         if(!error){ 
-            alert("Submitted Event Successfully")
+            alert("Submitted Event Successfully") 
+            navigate("/events");
         }
     } 
 
@@ -236,8 +239,7 @@ function EventForm(){
                             <div className="flex justify-center mt-8"> 
                                 <button className="font-Text font-medium  text-center text-[#F9F4F4] rounded-full bg-[#00A6FB] h-1xl w-36 cursor-pointer hover:scale-125 transition" 
                                 type="button"
-                                onClick={submitEvent}
-                                // disabled={!isLoaded || !user}     
+                                onClick={submitEvent}   
                                 > 
                                     {!isLoaded ? 'Loading...' : 'Host Event'} 
                                 </button>
