@@ -4,12 +4,14 @@ import { useUser } from "@clerk/clerk-react";
 import { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import SlideInText from "./SlideInText";
-
-
+import NavBar from "./NavBar";
+import { Link } from 'react-router-dom';
+import { useClerk } from '@clerk/clerk-react';
 
 function EventForm(){ 
 
     const { user, isLoaded } = useUser();
+    const {signOut}=useClerk();
     const [userId, setUserId] = useState(null);
     const navigate = useNavigate();
 
@@ -18,6 +20,15 @@ function EventForm(){
                 setUserId(user.id);
         }
     }, [isLoaded, user]);
+
+    const handleSignOut = async () => {
+            try {
+                await signOut();
+                navigate('/'); 
+            } catch (error) {
+                console.error('Error signing out:', error);
+            }
+        };
 
 
     const events = { 
@@ -66,8 +77,7 @@ function EventForm(){
         };
 
         const capacityVal = getSingleVal("event_capacity");
-        console.log('Capacity value from select:', capacityVal, 'Type:', typeof capacityVal); 
-        console.log('Submitting data:', savedEventData);
+
         const {data,error}= await supabase 
         .from('events')
         .insert(savedEventData)
@@ -88,9 +98,19 @@ function EventForm(){
 
     return ( 
             <> 
+               <NavBar> 
+                    <a href="/" className="hover:text-[#00A6FB]"> Home</a>
+                    <Link to="/#features" className="hover:text-[#00A6FB]">Features</Link>
+                    <button 
+                        onClick={handleSignOut} 
+                        className="hover:text-[#00A6FB] cursor-pointer bg-transparent border-none text-inherit"
+                    > 
+                        Sign out
+                    </button>
+               </NavBar>
                <div className="flex justify-center align-center"> 
                 <SlideInText> 
-                    <div id="form-container" className="h-[45rem] w-[40rem] bg-[#F9F4F4] rounded-lg mt-8 flex flex-col justify-center gap-6 border-4 border-[#00A6FB]"> 
+                    <div id="form-container" className="h-[45rem] w-[40rem] bg-[#F9F4F4] rounded-lg mt-16 flex flex-col justify-center gap-6 border-4 border-[#00A6FB]"> 
                         <div className="mt-4"> 
                             <h1 className="font-Heading text-center text-3xl">Host A Event</h1>
                         </div>
