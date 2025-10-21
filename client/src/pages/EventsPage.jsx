@@ -77,6 +77,7 @@ function EventsPage(){
                 <a href="/" className="hover:text-[#00A6FB]"> Home</a>
     
                     <Link to="/#features" className="hover:text-[#00A6FB]">Features</Link>
+                    <Link to="/profile" className="hover:text-[#00A6FB]">{isSignedIn?"Profile":""}</Link> 
 
                     <button 
                         onClick={handleSignOut} 
