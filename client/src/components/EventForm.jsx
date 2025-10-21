@@ -4,7 +4,7 @@ import { useUser } from "@clerk/clerk-react";
 import { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 
-// console.log('Supabase client:', supabase); 
+
 
 function EventForm(){ 
 
@@ -48,7 +48,6 @@ function EventForm(){
             return;
         }
 
-        // console.log('userId at submit time:', user.id);
 
         const savedEventData ={ 
             clerk_user_id: user.id,
@@ -89,7 +88,7 @@ function EventForm(){
     return ( 
             <> 
                <div className="flex justify-center align-center"> 
-                <div id="form-container" className="h-[45rem] w-[40rem] bg-[#F9F4F4] rounded-lg mt-8 flex flex-col justify-center gap-6"> 
+                <div id="form-container" className="h-[45rem] w-[40rem] bg-[#F9F4F4] rounded-lg mt-8 flex flex-col justify-center gap-6 border-4 border-[#00A6FB]"> 
                     <div className="mt-4"> 
                         <h1 className="font-Heading text-center text-3xl">Host A Event</h1>
                     </div>
@@ -142,8 +141,8 @@ function EventForm(){
                                 <select id="tech-exp"
                                 name="tech-experience"  className="bg-[#F9F4F4] text-[#09090B] border-2 border-[#09090B] w-11/12 rounded-sm">
                                     <option value="">No Selection</option>
-                                    <option value="None"> None - No Experience </option> 
-                                    <option value="Beginner">Beginner </option> 
+                                    <option value="None"> No experience needed</option> 
+                                    <option value="Beginner">Beginner-friendly </option> 
                                     <option value="Intermediate">Intermediate </option> 
                                     <option value="Advanced">Advanced </option> 
                                 </select>
@@ -154,8 +153,8 @@ function EventForm(){
                                 <select id="tech-knowledge"
                                 name="tech-knowledge" className="bg-[#F9F4F4] text-[#09090B] border-2 border-[#09090B] w-11/12 rounded-sm  ">
                                     <option value="">No Selection</option>
-                                    <option value="None"> None </option> 
-                                    <option value="Beginner"> Beginner </option> 
+                                    <option value="None"> None-Required </option> 
+                                    <option value="Beginner"> Beginner-friendly </option> 
                                     <option value="Intermediate">Intermediate </option> 
                                     <option value="Advanced">Advanced</option>  
                                 </select>
@@ -166,7 +165,7 @@ function EventForm(){
                                 <select id="security-Familiarity" 
                                 name="security-Familiarity" className="bg-[#F9F4F4] text-[#09090B] border-2 border-[#09090B]  w-11/12  rounded-sm ">
                                     <option value="">No Selection</option>
-                                    <option value="None">Not familiar</option> 
+                                    <option value="None">No familiarity needed</option> 
                                     <option value="Some">Somewhat familiar </option> 
                                     <option value="Familiar">Familiar </option>   
                                     <option value="Very-Familiar">Very Familiar</option>
@@ -220,20 +219,17 @@ function EventForm(){
                             </div> 
 
                             <div id="event-location" className="mb-2 pl-4"> 
-                                <label htmlFor="event-location" className="font-SubHeading font-medium text-nowrap text-base">Event Location</label> 
-                                <select id="event_location" 
-                                name="event-location" className="bg-[#F9F4F4] text-[#09090B] border-2 border-[#09090B]  w-11/12  rounded-sm ">
-                                    <option value="">No Selection</option>
-                                    <option value="remote">Remote</option> 
-                                    <option value="in-person">In-Person</option>
-                            </select>
+                                <label htmlFor="event-location" className="font-SubHeading font-medium text-nowrap text-base">Event Location</label>
+                                <input type="text" 
+                                    className="bg-[#F9F4F4] text-[#09090B] border-2 border-[#09090B] w-11/12 rounded-sm"
+                                    id="event_location" 
+                                    placeholder="Place address or zoom link here."
+                                />
                             </div> 
 
 
 
-                            
-
-                             
+                                            
 
                             
                             <div className="flex justify-center mt-8"> 
