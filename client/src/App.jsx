@@ -12,7 +12,7 @@ import Tos from './pages/Tos';
 import ProfilePage from './pages/ProfilePage';
 import EventsPage from './pages/EventsPage';
 import EventForm from './components/EventForm';
-import TestPage from './pages/testpage';
+
 
 // Simple ProtectedRoute component
 const ProtectedRoute = ({ children, requiresForm = false }) => {
@@ -49,7 +49,6 @@ function App() {
                 <Route path="/current-events" element={<CurrentEventPage/>} />
                 <Route path="/events" element={<EventsPage/>}/>
                 <Route path="/eventform" element={<EventForm/>}/>
-                <Route path="/test" element={<TestPage/>}/>
                 <Route path="/tos" element={<Tos/>} />
 
                 {/* Protected routes */}
