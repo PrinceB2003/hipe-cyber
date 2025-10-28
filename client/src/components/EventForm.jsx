@@ -1,4 +1,3 @@
-
 import { supabase } from "../lib/supabase"; 
 import { useUser } from "@clerk/clerk-react";
 import { useState, useEffect } from "react";
@@ -36,12 +35,16 @@ function EventForm(){
         host_name:'', 
         event_desc:'', 
         event_date_time:'', 
-        event_capacity:0 , 
+        // event_capacity:0 , 
         event_location:'', 
         rec_tech_exp:'', 
         rec_tech_knowledge:'', 
         rec_cybersec_familarity:'', 
         cybersec_interest:'',
+        event_type:'',
+        reg_platform:'', 
+        reg_deadline:'',
+        reg_link:'',
         event_id:0
     };
 
@@ -67,16 +70,20 @@ function EventForm(){
             host_name:getSingleVal("hostName"), 
             event_desc:getSingleVal("evDescrip"), 
             event_date_time:getSingleVal("evDate"),
-            event_capacity:parseInt(getSingleVal("event_capacity")), 
+            // event_capacity:parseInt(getSingleVal("event_capacity")), 
             event_location:getSingleVal("event_location"), 
             rec_tech_exp:getSingleVal("tech-exp"), 
             rec_tech_knowledge:getSingleVal("tech-knowledge"), 
             rec_cybersec_familarity:getSingleVal("security-Familiarity"), 
             cybersec_interest:getSingleVal("cybersec-interest"),
+            event_type:getSingleVal("event-type"), 
+            reg_platform:getSingleVal("reg-platform"), 
+            reg_deadline:getSingleVal("reg-deadline"), 
+            reg_link:getSingleVal("reg-link"),
             
         };
 
-        const capacityVal = getSingleVal("event_capacity");
+        // const capacityVal = getSingleVal("event_capacity");
 
         const {data,error}= await supabase 
         .from('events')
@@ -98,7 +105,7 @@ function EventForm(){
 
     return ( 
             <> 
-               <NavBar> 
+               <NavBar className="mb-8 pb-8"> 
                     <a href="/" className="hover:text-[#00A6FB]"> Home</a>
                     <Link to="/#features" className="hover:text-[#00A6FB]">Features</Link>
                     <button 
@@ -108,15 +115,15 @@ function EventForm(){
                         Sign out
                     </button>
                </NavBar>
-               <div className="flex justify-center align-center"> 
+               <div className="flex justify-center align-center pt-16"> 
                 <SlideInText> 
-                    <div id="form-container" className="h-[45rem] w-[40rem] bg-[#F9F4F4] rounded-lg mt-16 flex flex-col justify-center gap-6 border-4 border-[#00A6FB]"> 
-                        <div className="mt-4"> 
-                            <h1 className="font-Heading text-center text-3xl">Host A Event</h1>
+                    <div id="form-container" className="h-[45rem] w-[40rem]   bg-[#F9F4F4] rounded-lg pt-48 mt-16 flex flex-col justify-center gap-6 border-4 border-[#00A6FB] overflow-y-scroll"> 
+                        <div className="mt-4  "> 
+                            <h1 className="font-Heading text-center  text-3xl">Host A Event</h1>
                         </div>
 
                         <div> 
-                            <form className="text-[#09090B]"> 
+                            <form className="text-[#09090B] "> 
                                 <div className="pl-4 "> 
                                     <label htmlFor="evName" className="font-SubHeading font-medium text-base">Event Name: </label>
                                     <input type="text"  
@@ -153,18 +160,16 @@ function EventForm(){
                                         id="evDate"
 
                                     /> 
-                                </div>  
+                                </div> 
 
-
-                                
 
                                 <div id="Technical-Experience" className="mb-2 pl-4 "> 
                                     <label htmlFor="technical-experience" className="font-SubHeading font-medium text-nowrap text-base">Recommended Technical Experience</label> 
                                     <select id="tech-exp"
                                     name="tech-experience"  className="bg-[#F9F4F4] text-[#09090B] border-2 border-[#09090B] w-11/12 rounded-sm">
                                         <option value="">No Selection</option>
-                                        <option value="None"> No experience needed</option> 
-                                        <option value="Beginner">Beginner-friendly </option> 
+                                        <option value="None"> No Experience Needed</option> 
+                                        <option value="Beginner">Beginner Friendly </option> 
                                         <option value="Intermediate">Intermediate </option> 
                                         <option value="Advanced">Advanced </option> 
                                     </select>
@@ -175,8 +180,8 @@ function EventForm(){
                                     <select id="tech-knowledge"
                                     name="tech-knowledge" className="bg-[#F9F4F4] text-[#09090B] border-2 border-[#09090B] w-11/12 rounded-sm  ">
                                         <option value="">No Selection</option>
-                                        <option value="None"> None-Required </option> 
-                                        <option value="Beginner"> Beginner-friendly </option> 
+                                        <option value="None"> None Required </option> 
+                                        <option value="Beginner"> Beginner Friendly </option> 
                                         <option value="Intermediate">Intermediate </option> 
                                         <option value="Advanced">Advanced</option>  
                                     </select>
@@ -187,8 +192,8 @@ function EventForm(){
                                     <select id="security-Familiarity" 
                                     name="security-Familiarity" className="bg-[#F9F4F4] text-[#09090B] border-2 border-[#09090B]  w-11/12  rounded-sm ">
                                         <option value="">No Selection</option>
-                                        <option value="None">No familiarity needed</option> 
-                                        <option value="Some">Somewhat familiar </option> 
+                                        <option value="None">No Familiarity Needed</option> 
+                                        <option value="Some">Somewhat Familiar </option> 
                                         <option value="Familiar">Familiar </option>   
                                         <option value="Very-Familiar">Very Familiar</option>
                                 </select>
@@ -200,45 +205,40 @@ function EventForm(){
                                     name="cybersec-interest" className="bg-[#F9F4F4] text-[#09090B] border-2 border-[#09090B] w-11/12 rounded-sm"
                                     >   
                                         <option value="">No Selection</option>
-                                        <option value="network-security">Network Security</option>
-                                        <option value="cloud-security">Cloud Security</option>
-                                        <option value="application-security">Application Security</option>
-                                        <option value="information-security">Information Security</option>
-                                        <option value="grc">Governance, Risk, and Compliance (GRC)</option>
-                                        <option value="soc">Security Operations (SOC)</option>
-                                        <option value="incident-response">Incident Response</option>
-                                        <option value="threat-hunting">Threat Hunting</option>
-                                        <option value="penetration-testing">Penetration Testing / Ethical Hacking</option>
-                                        <option value="red-team">Red Team Operations</option>
-                                        <option value="blue-team">Blue Team Operations</option>
-                                        <option value="digital-forensics">Digital Forensics</option>
-                                        <option value="iam">Identity and Access Management (IAM)</option>
-                                        <option value="cryptography">Cryptography</option>
-                                        <option value="malware-analysis">Malware Analysis</option>
-                                        <option value="endpoint-security">Endpoint Security</option>
-                                        <option value="vulnerability-management">Vulnerability Management</option>
-                                        <option value="devsecops">DevSecOps</option>
-                                        <option value="iot-security">IoT Security</option>
-                                        <option value="policy-strategy">Cybersecurity Policy and Strategy</option>
+                                        <option value="Network-Security">Network-Security</option>
+                                        <option value="cloud-security">Cloud-Security</option>
+                                        <option value="Application-Security">Application-Security</option>
+                                        <option value="Information-Security">Information-Security</option>
+                                        <option value="GRC">Governance, Risk, and Compliance (GRC)</option>
+                                        <option value="SOC">Security Operations (SOC)</option>
+                                        <option value="Incident-Response">Incident-Response</option>
+                                        <option value="Threat-Hunting">Threat-Hunting</option>
+                                        <option value="Penetration-Testing">Penetration-Testing</option>
+                                        <option value="Red-Team Ops">Red-Team-Ops</option>
+                                        <option value="Blue-Team Ops">Blue-Team-Ops</option>
+                                        <option value="Digital-Forensics">Digital-Forensics</option>
+                                        <option value="IAM">Identity and Access Management (IAM)</option>
+                                        <option value="Cryptography">Cryptography</option>
+                                        <option value="Malware-Analysis">Malware-Analysis</option>
+                                        <option value="Endpoint-Security">Endpoint-Security</option>
+                                        <option value="Vulnerability-Management">Vulnerability-Management</option>
+                                        <option value="DevSecOps">DevSecOps</option>
+                                        <option value="IoT-Security">IoT-Security</option>
+                                        <option value="Cybersecurity-Policy-Strategy">Cybersecurity-Policy-and-Strategy</option>
                                     </select>
                                 </div>
 
-                                <div id="event-capacity" className="mb-2 pl-4"> 
-                                    <label htmlFor="event-capacity" className="font-SubHeading font-medium text-nowrap text-base">Event Capacity</label> 
-                                    <select id="event_capacity" 
-                                    name="event-capacity" className="bg-[#F9F4F4] text-[#09090B] border-2 border-[#09090B]  w-11/12  rounded-sm ">
+                                <div id="event-Type" className="mb-2 pl-4"> 
+                                    <label htmlFor="event-Type" className="font-SubHeading font-medium text-nowrap text-base">What type of event is this?</label> 
+                                    <select id="event-type" 
+                                    name="event-type" className="bg-[#F9F4F4] text-[#09090B] border-2 border-[#09090B]  w-11/12  rounded-sm ">
                                         <option value="">No Selection</option>
-                                        <option value="5">5</option> 
-                                        <option value="10">10 </option> 
-                                        <option value="15">15 </option>   
-                                        <option value="20">20</option>
-                                        <option value="25">25 </option>   
-                                        <option value="30">30</option>
-                                        <option value="40">40</option> 
-                                        <option value="50">50</option>
-
+                                        <option value="In-Person">In-Person</option> 
+                                        <option value="Virtual">Virtual </option> 
+                                        <option value="Hybrid">Hybrid </option>   
                                 </select>
-                                </div> 
+                                </div>
+
 
                                 <div id="event-location" className="mb-2 pl-4"> 
                                     <label htmlFor="event-location" className="font-SubHeading font-medium text-nowrap text-base">Event Location</label>
@@ -247,7 +247,37 @@ function EventForm(){
                                         id="event_location" 
                                         placeholder="Place address or zoom link here."
                                     />
+                                </div>
+
+                                <div id="reg-Platform" className="mb-2 pl-4"> 
+                                    <label htmlFor="reg-Platform" className="font-SubHeading font-medium text-nowrap text-base">Registration Platform</label> 
+                                    <select id="reg-platform" 
+                                    name="reg-platform" className="bg-[#F9F4F4] text-[#09090B] border-2 border-[#09090B]  w-11/12  rounded-sm ">
+                                        <option value="">No Selection</option>
+                                        <option value="Zoom">Zoom</option> 
+                                        <option value="EventBrite">EventBrite </option> 
+                                        <option value="Google Forms">Google Forms</option> 
+                                        <option value="Slack">Slack</option>  
+                                </select>
                                 </div> 
+
+                                <div id="reg-Link" className="mb-2 pl-4"> 
+                                    <label htmlFor="reg-link" className="font-SubHeading font-medium text-nowrap text-base">Registration Link</label>
+                                    <input type="text" 
+                                        className="bg-[#F9F4F4] text-[#09090B] border-2 border-[#09090B] w-11/12 rounded-sm"
+                                        id="reg-link" 
+                                        placeholder="Place registration link here."
+                                    />
+                                </div>
+
+                                <div className="pl-4"> 
+                                    <label htmlFor="regDeadline" className="font-SubHeading font-medium text-base">Registration Deadline</label>
+                                    <input type="datetime-local"
+                                        className="bg-[#F9F4F4] text-[#09090B] border-2 border-[#09090B] w-11/12 rounded-sm"  
+                                        id="reg-deadline"
+
+                                    /> 
+                                </div>  
 
 
 

@@ -6,6 +6,9 @@ function EventCard({children}) {
                         p-2 shadow-(--card-Shadow)" 
                         > 
                      {children}
+                      
+                         
+                            
                 </div>
             </>
 

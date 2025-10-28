@@ -6,13 +6,19 @@ import { useUser } from "@clerk/clerk-react";
 import { useState, useEffect } from "react";
 import SlideInText from "../components/SlideInText";
 import { useClerk } from '@clerk/clerk-react';
+import { useNavigate } from 'react-router-dom';
+import EventPopUp from "../components/EventPopUp";
 
 
 function EventsPage(){
     const [events, setEvents] = useState([]);
-    const [loading, setLoading] = useState(true); 
+    const [loading, setLoading] = useState(true);
+    const [cybersecFilter,setCybersecFilter] = useState(); 
+    const [appliedFilter,setAppliedFilter] = useState(); 
     const { signOut, isSignedIn } = useClerk();
-
+    const navigate = useNavigate();  
+    const [ShowPopUp, setShowPopUp] = useState(false);
+    const [currEventId,setCurrEventID]=useState(null);
 
 
     useEffect(() => {
@@ -34,6 +40,21 @@ function EventsPage(){
         fetchEvents();
     }, []);
 
+    const filteredEvents = events.filter( 
+        event=> { 
+            if(!appliedFilter || appliedFilter==""){ 
+                return true;
+            }
+            return event.cybersec_interest?.toLowerCase()==appliedFilter.toLowerCase();
+        } 
+    ) 
+
+    const handleAppliedFilter = () => { 
+        setAppliedFilter(cybersecFilter);
+    };
+       
+    
+
     const handleSignOut = async () => {
             try {
                 await signOut();
@@ -44,31 +65,58 @@ function EventsPage(){
         };
 
 
+    function handleRegister(event){ 
+            if(isSignedIn&&event.reg_link && event.reg_link!=null && event.reg_link!=""){ 
+                window.open(event.reg_link,'_blank');
+                console.log(event.reg_link);
 
+                setCurrEventID(event.event_id);
+
+                setTimeout ( ()=> { 
+                    setShowPopUp(true);
+                }, 1500);
+            }
+
+            else if(!isSignedIn){ 
+                navigate('/sign-in');
+            }
+
+            else { 
+                alert("Registration Link Unavailable");
+                console.log(event.reg_link);
+            }
+            
+        }
 
 
 
     function createEventRows(event){ 
         return (       
                 <tr key={event.event_id}>
-                    <td className="font-Text pl-8 pr-8 pt-4 pb-4 border-b-2"><div>{event.event_id}</div></td>  
                     <td className="font-Text pl-8 pr-8 pt-4 pb-4 border-b-2"><div>{event.event_name}</div></td>
                     <td className="font-Text pl-8 pr-8 pt-4 pb-4 border-b-2"><div>{event.host_name}</div></td> 
                     <td className="font-Text pl-8 pr-8 pt-4 pb-4 border-b-2"><div>{event.event_desc}</div></td>
                     <td className="font-Text pl-8 pr-8 pt-4 pb-4 border-b-2"><div>{new Date(event.event_date_time).toLocaleString()}</div></td>
+                    <td className="font-Text pl-8 pr-8 pt-4 pb-4 border-b-2"><div>{event.event_type}</div></td>
+                    <td className="font-Text pl-8 pr-8 pt-4 pb-4 border-b-2"><div>{new Date(event.reg_deadline).toLocaleString()}</div></td>
+                    <td className="font-Text pl-8 pr-8 pt-4 pb-4 border-b-2"><div><button  
+                                                                                    onClick={()=>handleRegister(event)} 
+                                                                                    className="font-Text font-small text-center text-[#F9F4F4] rounded-full bg-[#00A6FB] h-6 w-32  cursor-pointer hover:scale-125 transition"> 
+                                                                                        {isSignedIn? "Register": "Sign In to Register"}
+                                                                        </button></div></td>
+                    <td className="font-Text pl-8 pr-8 pt-4 pb-4 border-b-2"><div>{event.reg_platform}</div></td>        
                     <td className="font-Text pl-8 pr-8 pt-4 pb-4 border-b-2"><div>{event.event_location}</div></td>
                     <td className="font-Text pl-8 pr-8 pt-4 pb-4 border-b-2"><div>{event.rec_tech_exp}</div></td>
                     <td className="font-Text pl-8 pr-8 pt-4 pb-4 border-b-2"><div>{event.rec_tech_knowledge}</div></td>
                     <td className="font-Text pl-8 pr-8 pt-4 pb-4 border-b-2"><div>{event.rec_cybersec_familarity}</div></td> 
                     <td className="font-Text pl-8 pr-8 pt-4 pb-4 border-b-2"><div>{event.cybersec_interest}</div></td>
-                    <td className="font-Text pl-8 pr-8 pt-4 pb-4 border-b-2"><div>{event.event_capacity}</div></td>
-                    <td className="font-Text pl-8 pr-8 pt-4 pb-4 border-b-2"><div><button className="font-Text font-small text-center text-[#F9F4F4] rounded-full bg-[#00A6FB] h-6 w-24 cursor-pointer hover:scale-125 transition"> 
-                                                        Register 
-                                                    </button></div></td>
+                    
                 </tr>
 
         );
     };
+
+   
 
 
     return ( 
@@ -86,6 +134,13 @@ function EventsPage(){
                         {isSignedIn? "Sign out" : ""}
                     </button>
             </NavBar> 
+
+            <EventPopUp 
+                show={ShowPopUp} 
+                onClose={()=>setShowPopUp(false)}
+                eventId={currEventId}
+            />
+
         <SlideInText> 
             <div className="w-full flex justify-center"> 
                 <div id="event-container" className="flex flex-col justify-center align-center gap-12 pt-8 mt-16 mb-8  "> 
@@ -104,8 +159,39 @@ function EventsPage(){
                                 </Link>  
                                 
                             </div> 
-                            <div> 
-                                <button className="flex items-center justify-center font-Text font-medium text-center text-[#F9F4F4] rounded-full bg-[#00A6FB] h-6 w-36 cursor-pointer hover:scale-125 transition">Search</button>
+                            <div className="flex gap-2"> 
+                                <select
+                                    value={cybersecFilter}
+                                    onChange={(e) => setCybersecFilter(e.target.value)}
+                                    className="font-Text text-center rounded-full border-2 border-[#00A6FB] h-6 w-48 px-3 focus:outline-none focus:border-[#0582ca] cursor-pointer"
+                                >
+                                    <option value="">No Selection</option>
+                                    <option value="Network-Security">Network Security</option>
+                                    <option value="cloud-security">Cloud Security</option>
+                                    <option value="Application-Security">Application Security</option>
+                                    <option value="Information-Security">Information Security</option>
+                                    <option value="GRC">Governance, Risk, and Compliance (GRC)</option>
+                                    <option value="SOC">Security Operations (SOC)</option>
+                                    <option value="Incident-Response">Incident Response</option>
+                                    <option value="Threat-Hunting">Threat Hunting</option>
+                                    <option value="Penetration-Testing">Penetration Testing</option>
+                                    <option value="Red-Team Ops">Red Team Ops</option>
+                                    <option value="Blue-Team Ops">Blue Team Ops</option>
+                                    <option value="Digital-Forensics">Digital Forensics</option>
+                                    <option value="IAM">Identity and Access Management (IAM)</option>
+                                    <option value="Cryptography">Cryptography</option>
+                                    <option value="Malware-Analysis">Malware Analysis</option>
+                                    <option value="Endpoint-Security">Endpoint Security</option>
+                                    <option value="Vulnerability-Management">Vulnerability Management</option>
+                                    <option value="DevSecOps">DevSecOps</option>
+                                    <option value="IoT-Security">IoT Security</option>
+                                    <option value="Cybersecurity-Policy-Strategy">Cybersecurity Policy and Strategy</option>
+                                </select>
+                                 <button  
+                                    onClick={handleAppliedFilter}
+                                    className="flex items-center justify-center font-Text font-medium text-center text-[#F9F4F4] rounded-full bg-[#00A6FB] h-6 w-36 cursor-pointer hover:scale-125 transition"> 
+                                    Search 
+                                    </button>
                             </div>
                         </div>
                     </div> 
@@ -114,29 +200,30 @@ function EventsPage(){
                         <h2 className="font-SubHeading text-center text-4xl text-[#F9F4F4]">Available Events</h2>
                     </div>
         
-                    <div id="event-display-container" className="h-[40rem] pr-4 pb-4 w-[60rem] overflow-auto bg-[#F9F4F4] rounded-xl border-4 border-[#00A6FB]"> 
+                    <div id="event-display-container" className="h-[40rem] pr-4 pb-4 w-[62rem] overflow-auto bg-[#F9F4F4] rounded-xl border-4 border-[#00A6FB]"> 
                         <div id="event-display" className=""> 
                             <table className="">
                                 <thead>
                                     <tr className=" text-left border-t-2 border-b-2"> 
-                                        <th className="pl-8 pr-8 font-semibold">Event ID </th>
                                         <th className="pl-8 pr-8 font-semibold">Name </th>
                                         <th className="pl-8 pr-8 font-semibold">Host </th>
                                         <th className="pl-8 pr-8 font-semibold">About</th>
                                         <th className="pl-8 pr-8 font-semibold">Date & Time</th>
+                                        <th className="pl-8 pr-8 font-semibold">Type</th>
+                                        <th className="pl-8 pr-8 font-semibold">Registration Deadline</th>
+                                        <th className="pl-8 pr-8 font-semibold">Button</th>
+                                        <th className="pl-8 pr-8 font-semibold">Registration Platform</th>
                                         <th className="pl-8 pr-8 font-semibold">Location</th>
                                         <th className="pl-8 pr-8 font-semibold">Recommended Technical Exp </th> 
                                         <th className="pl-8 pr-8 font-semibold">Recommended Technical Knowledge </th>
                                         <th className="pl-8 pr-8 font-semibold">Recommended Cybersec Familarity </th>
                                         <th className="pl-8 pr-8 font-semibold">Cybersecurity Area </th>
-                                        <th className="pl-8 pr-8 font-semibold">Capacity </th>
-                                        <th className="pl-8 pr-8 font-semibold"></th>
                                     </tr> 
                                 </thead>  
                                 
 
                                 <tbody>
-                                    {events.map((event) => (
+                                    {filteredEvents.map((event) => (
                                          createEventRows(event)
                                     ))}
                             </tbody>

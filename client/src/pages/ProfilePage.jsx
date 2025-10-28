@@ -14,6 +14,8 @@ function ProfilePage() {
         const [loading, setLoading] = useState(false);
         const [isEditing, setIsEditing] = useState(false);
         const { user, isLoaded } = useUser();
+        const [registeredEvents, setRegisteredEvents] = useState([]);
+        const [eventsLoading, setEventsLoading] = useState(false);
         const [preferences, setPreferences] = useState({
             cuny_campus: '',
             major: [],
@@ -44,6 +46,7 @@ function ProfilePage() {
                 setUserId(user.id);
                 console.log('Clerk User ID:', user.id);
                 loadPreferences(user.id);
+                loadRegisteredEvents(user.id);
             }
         }, [isLoaded, user]);
 
@@ -72,6 +75,77 @@ function ProfilePage() {
                 });
             }
         };
+
+
+        const loadRegisteredEvents = async (uid) => {
+            setEventsLoading(true);
+            
+            const { data, error } = await supabase
+                .from('registered_events')
+                .select(`
+                    event_id,
+                    events (
+                        event_id,
+                        event_name,
+                        event_desc,
+                        event_location
+                    )
+                `)
+                .eq('clerk_user_id', uid);
+
+            if (error) {
+                console.error('Error fetching registered events:', error);
+                setEventsLoading(false);
+                return;
+            }
+
+            
+            const events = data.map(item => ({
+                id: item.events.event_id,
+                name: item.events.event_name,
+                description: item.events.event_desc,
+                location: item.events.event_location
+            }));
+
+            setRegisteredEvents(events);
+            setEventsLoading(false);
+        };
+
+        const checkRegistrationLimit = async (uid) => {
+        const { data, error, count } = await supabase
+            .from('registered_events')
+            .select('*', { count: 'exact', head: true })
+            .eq('clerk_user_id', uid);
+
+        if (error) {
+            console.error('Error checking registration count:', error);
+            return false;
+        }
+
+        return count < 5; 
+    };
+
+    const handleUnregisterEvent = async (eventId) => {
+        if (!window.confirm('Are you sure you want to cancel this event registration?')) {
+            return;
+        }
+
+        const { error } = await supabase
+            .from('registered_events')
+            .delete()
+            .eq('clerk_user_id', user.id)
+            .eq('event_id', eventId);
+
+        if (error) {
+            console.error('Error unregistering from event:', error);
+            alert('Failed to cancel registration');
+            return;
+        }
+
+        alert('Successfully cancelled event registration');
+        loadRegisteredEvents(user.id);
+    };
+
 
     // Helper function to get selected values from multi-select
         const getSelectedValues = (selectId) => {
@@ -556,56 +630,29 @@ function ProfilePage() {
                     </div> 
                     <hr></hr> 
 
-                    <div id="event-card-container" className=" flex justify-center gap-4 mt-4 pl-4"> 
-                        <EventCard> 
+                    <div id="event-card-container" className=" flex justify-center gap-2 mt-4 pl-4"> 
+                        
+                        {registeredEvents.map(event => (
+                        <EventCard key={event.id}> 
                             <div> 
-                                <h1 className="text-[#F9F4F4] text-center">Event#1</h1> 
-                                <p> This is some event description.</p>
-                                <p>Location: Zoom</p>
-                            </div> 
-                            <div> 
-                                <button className="font-text font-semibold text-sm rounded-full bg-[#00A6FB]  
-                                                            text-[#F9F4F4] h-12 w-fit p-2 cursor-pointer"> 
-                                                Cancel Event 
-                                        </button>    
+                                <h1 className="text-[#F9F4F4] text-center font-semibold text-xl">{event.name}</h1> 
+                                <p className="text-[#F9F4F4] text-center mt-2">{event.description}</p>
+                                <p className="text-[#F9F4F4] text-center mt-1">{event.location}</p>
                             </div>
-                        </EventCard> 
 
-                        <EventCard> 
-                            <div> 
-                                <h1 className="text-[#F9F4F4] text-center">Event#2</h1> 
-                                <p> This is some event description.</p>
-                                <p>Location: Zoom</p>
-                            </div> 
-                            <div> 
-                                <button className="font-text font-semibold text-sm rounded-full bg-[#00A6FB]  
-                                                            text-[#F9F4F4] h-12 w-fit p-2 cursor-pointer"> 
-                                                Cancel Event 
-                                        </button>      
-                            </div>
-                        </EventCard> 
-
-                        <EventCard> 
-                            <div> 
-                                <h1 className="text-[#F9F4F4] text-center">Event#3</h1> 
-                                <p> This is some event description.</p>
-                                <p>Location: Zoom</p>
-                            </div> 
-                            <div> 
-                                <button className="font-text font-semibold text-sm rounded-full bg-[#00A6FB]  
-                                                            text-[#F9F4F4] h-12 w-fit p-2 cursor-pointer"> 
-                                                Cancel Event 
-                                        </button>      
-                            </div>
+                            <div className="mt-1 text-center"> 
+                                <button 
+                                    onClick={() => handleUnregisterEvent(event.id)}
+                                    className="font-Text font-medium text-center rounded-full bg-[#e50000] h-6 w-28 cursor-pointer hover:scale-125 transition"
+                                    > 
+                                    Cancel 
+                                </button>    
+                             </div>
                         </EventCard>
+            ))}
+                       
                     </div>
                 </div>
-
-
-
-
-
-
 
 
 
