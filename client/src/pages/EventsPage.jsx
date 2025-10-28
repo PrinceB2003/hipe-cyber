@@ -190,7 +190,7 @@ function EventsPage(){
                                  <button  
                                     onClick={handleAppliedFilter}
                                     className="flex items-center justify-center font-Text font-medium text-center text-[#F9F4F4] rounded-full bg-[#00A6FB] h-6 w-36 cursor-pointer hover:scale-125 transition"> 
-                                    Search 
+                                    Filter 
                                     </button>
                             </div>
                         </div>
