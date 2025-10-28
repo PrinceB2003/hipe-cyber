@@ -211,7 +211,7 @@ function EventsPage(){
                                         <th className="pl-8 pr-8 font-semibold">Date & Time</th>
                                         <th className="pl-8 pr-8 font-semibold">Type</th>
                                         <th className="pl-8 pr-8 font-semibold">Registration Deadline</th>
-                                        <th className="pl-8 pr-8 font-semibold">Button</th>
+                                        <th className="pl-8 pr-8 font-semibold"></th>
                                         <th className="pl-8 pr-8 font-semibold">Registration Platform</th>
                                         <th className="pl-8 pr-8 font-semibold">Location</th>
                                         <th className="pl-8 pr-8 font-semibold">Recommended Technical Exp </th> 
