@@ -19,7 +19,7 @@ function EventsPage(){
     const navigate = useNavigate();  
     const [ShowPopUp, setShowPopUp] = useState(false);
     const [currEventId,setCurrEventID]=useState(null);
-
+    const { user } = useUser()
 
     useEffect(() => {
         console.log('useEffect is running');
@@ -88,9 +88,36 @@ function EventsPage(){
             
         }
 
+        const handleCancelEvent = async (eventId) => {
+    if (!window.confirm('Are you sure you want to cancel and delete this event? This action cannot be undone.')) {
+        return;
+    }
+
+    try {
+        const { error } = await supabase
+            .from('events')
+            .delete()
+            .eq('event_id', eventId)
+            .eq('clerk_user_id', user.id);
+
+        if (error) throw error;
+
+    
+        setEvents(prevEvents => 
+            prevEvents.filter(event => event.event_id !== eventId)
+        );
+
+        alert('Event cancelled and removed successfully');
+        } catch (error) {
+            console.error('Error cancelling event:', error);
+            alert('Failed to cancel event. Please try again.');
+        }
+    };
+
 
 
     function createEventRows(event){ 
+        const isHost = user && event.clerk_user_id === user.id;
         return (       
                 <tr key={event.event_id}>
                     <td className="font-Text pl-8 pr-8 pt-4 pb-4 border-b-2"><div>{event.event_name}</div></td>
@@ -104,6 +131,15 @@ function EventsPage(){
                                                                                     className="font-Text font-small text-center text-[#F9F4F4] rounded-full bg-[#00A6FB] h-6 w-32  cursor-pointer hover:scale-125 transition"> 
                                                                                         {isSignedIn? "Register": "Sign In to Register"}
                                                                         </button></div></td>
+                                                                    <td className="font-Text pl-8 pr-8 pt-4 pb-4 border-b-2"> 
+                                                                        {isHost && (
+                                                                                    <button  
+                                                                                        onClick={()=>handleCancelEvent(event.event_id)} 
+                                                                                        className="font-Text font-small text-center text-[#F9F4F4] rounded-full bg-red-500 h-6 w-24 cursor-pointer hover:scale-125 transition"> 
+                                                                                        Cancel
+                                                                                    </button>
+                                                                                 )} 
+                                                                    </td>
                     <td className="font-Text pl-8 pr-8 pt-4 pb-4 border-b-2"><div>{event.reg_platform}</div></td>        
                     <td className="font-Text pl-8 pr-8 pt-4 pb-4 border-b-2"><div>{event.event_location}</div></td>
                     <td className="font-Text pl-8 pr-8 pt-4 pb-4 border-b-2"><div>{event.rec_tech_exp}</div></td>
@@ -211,6 +247,7 @@ function EventsPage(){
                                         <th className="pl-8 pr-8 font-semibold">Date & Time</th>
                                         <th className="pl-8 pr-8 font-semibold">Type</th>
                                         <th className="pl-8 pr-8 font-semibold">Registration Deadline</th>
+                                        <th className="pl-8 pr-8 font-semibold"></th>
                                         <th className="pl-8 pr-8 font-semibold"></th>
                                         <th className="pl-8 pr-8 font-semibold">Registration Platform</th>
                                         <th className="pl-8 pr-8 font-semibold">Location</th>
