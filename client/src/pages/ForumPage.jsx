@@ -80,7 +80,7 @@ function ForumPage () {
             .from('messages')
             .select(`
                 *,
-                user_preferences!fk_messages_user_id (
+                 user_preferences (
                     user_role,
                     first_name,
                     last_name
@@ -139,7 +139,7 @@ function ForumPage () {
                         .from('messages')
                         .select(`
                             *,
-                            user_preferences!fk_messages_user_id (
+                            user_preferences!user_id (
                                 user_role,
                                 first_name,
                                 last_name
