@@ -27,7 +27,8 @@ function ProfilePage() {
             cybersecurity_interest: [],
             cybersecurity_familiarity: '',
             certifications: [] ,
-            created_at: null
+            created_at: null, 
+            user_role:''
         });
 
 
@@ -71,7 +72,8 @@ function ProfilePage() {
                     cybersecurity_interest: data.cybersecurity_interest || [],
                     cybersecurity_familiarity: data.cybersecurity_familiarity || '',
                     certifications: data.certifications || [] , 
-                    created_at: data.created_at || null
+                    created_at: data.created_at || null, 
+                    user_role:data.user_role || ' '
                 });
             }
         };
@@ -178,7 +180,8 @@ function ProfilePage() {
                 technical_knowledge: getSingleValue('tech-knowledge'),
                 cybersecurity_interest: getSelectedValues('cybersec-interest'),
                 cybersecurity_familiarity: getSingleValue('security-Familiarity'),
-                certifications: getSelectedValues('certs')
+                certifications: getSelectedValues('certs'),
+                user_role:getSingleValue('curr-status')
             };
 
             const { data, error } = await supabase
@@ -203,7 +206,8 @@ function ProfilePage() {
                     cybersecurity_interest: updatedPreferences.cybersecurity_interest,
                     cybersecurity_familiarity: updatedPreferences.cybersecurity_familiarity,
                     certifications: updatedPreferences.certifications, 
-                    created_at: preferences.created_at
+                    created_at: preferences.created_at,
+                    user_role:updatedPreferences.user_role
                 });
                 setIsEditing(false);
                 alert('Preferences updated successfully!');
@@ -277,7 +281,8 @@ function ProfilePage() {
                                 <p className="font-Text text-2xl">Major: {displayArray(preferences.major)}</p>
                                 <p className="font-Text text-2xl">Minor: {displayValue(preferences.minor)}</p>
                                 <p className="font-Text text-2xl">Interested Industry: {displayArray(preferences.interested_industry)} </p>
-                                <p className="font-Text text-2xl">Career Goals: {displayValue(preferences.career_goals)} </p>          
+                                <p className="font-Text text-2xl">Career Goals: {displayValue(preferences.career_goals)} </p>
+                                <p className="font-Text text-2xl">Current Status: {displayValue(preferences.user_role)} </p>            
                             </div> 
 
                             <div id="right-col"> 
@@ -491,6 +496,18 @@ function ProfilePage() {
                                     <option value="Internship"> Looking for an internship </option> 
                                     <option value="First-role">Looking for your first role </option> 
                                     <option value="Switch">Switching Careers </option>    
+                                </select>
+                            </div>  
+
+                            <div id="Current-Status" className="mb-2"> 
+                                <label htmlFor="current-status" className="font-SubHeading font-medium text-base">What is your current status?</label>
+                                <select id="curr-status"  defaultValue={preferences.user_role}
+                                name="current-status" className="bg-[#F9F4F4] text-[#09090B] border-2 border-[#09090B] w-11/12 rounded-sm ">
+                                    <option value="">No Selection</option>
+                                    <option value="Student"> Student </option> 
+                                    <option value="Intern">Intern </option> 
+                                    <option value="New-Grad">New-Grad </option> 
+                                    <option value="Professional">Professional </option>     
                                 </select>
                             </div> 
 
