@@ -81,9 +81,7 @@ function ForumPage () {
             .select(`
                 *,
                  userpref:user_id (
-                    user_role,
-                    first_name,
-                    last_name
+                    user_role
                 )
             `)
             .eq('channel_id', channelId)
@@ -140,9 +138,8 @@ function ForumPage () {
                         .select(`
                             *,
                             userpref:user_id(
-                                user_role,
-                                first_name,
-                                last_name
+                                user_role
+                              
                             )
                         `)
                         .eq('id', payload.new.id)
@@ -212,6 +209,7 @@ function ForumPage () {
                 .insert({
                     channel_id: activeChannelId,
                     user_id: user.id,
+                     user_name: user.fullName || user.username || 'Anonymous',
                     content: newMessage.trim(),
                 });
 
@@ -401,10 +399,7 @@ function ForumPage () {
                                        
                                         <div className="flex items-baseline gap-2 mb-1">
                                             <span className="font-semibold text-[#F9F4F4] text-sm">
-                                                {isOwnMessage 
-                                                ? (user.fullName || user.username || 'You')
-                                                : `${message.user_preferences?.first_name || ''} ${message.user_preferences?.last_name || ''}`.trim() || 'User'
-                                                }
+                                                {message.user_name || 'User'}
                                             </span>
                                             <span className="text-[#F9F4F4] text-sm">-</span>
                                             <span className="text-[#00A6FB] text-sm">
