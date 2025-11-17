@@ -80,8 +80,10 @@ function ForumPage () {
             .from('messages')
             .select(`
                 *,
-                userpref:user_id (
-                    user_role
+                user_preferences:user_id (
+                    user_role,
+                    first_name,
+                    last_name
                 )
             `)
             .eq('channel_id', channelId)
@@ -137,8 +139,10 @@ function ForumPage () {
                         .from('messages')
                         .select(`
                             *,
-                            userpref:user_id (
-                                user_role
+                            user_preferences:user_id (
+                                user_role,
+                                first_name,
+                                last_name
                             )
                         `)
                         .eq('id', payload.new.id)
@@ -397,11 +401,14 @@ function ForumPage () {
                                        
                                         <div className="flex items-baseline gap-2 mb-1">
                                             <span className="font-semibold text-[#F9F4F4] text-sm">
-                                                {isOwnMessage ? (user.fullName || user.username || 'You') : 'User'}
+                                                {isOwnMessage 
+                                                ? (user.fullName || user.username || 'You')
+                                                : `${message.user_preferences?.first_name || ''} ${message.user_preferences?.last_name || ''}`.trim() || 'User'
+                                                }
                                             </span>
                                             <span className="text-[#F9F4F4] text-sm">-</span>
                                             <span className="text-[#00A6FB] text-sm">
-                                                {message.userpref?.user_role || ''}
+                                                {message.user_preferences?.user_role || ''}
                                             </span>
                                             <span className="text-xs text-gray-500">
                                                 {formatTimestamp(message.created_at)}
