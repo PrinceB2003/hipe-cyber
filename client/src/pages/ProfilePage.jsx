@@ -7,6 +7,7 @@ import { useClerk } from '@clerk/clerk-react';
 import { useUser } from '@clerk/clerk-react';
 import EventCard from "../components/EventCard";
 import { Link } from 'react-router-dom';
+// import { v4 as uuidv4 } from 'uuid'
 
 function ProfilePage() { 
         const { signOut } = useClerk(); 
@@ -28,7 +29,12 @@ function ProfilePage() {
             cybersecurity_familiarity: '',
             certifications: [] ,
             created_at: null, 
-            user_role:''
+            user_role:'',
+            linkedin_link:'',
+            // student_email:'',
+            // student_verified:'',
+            // verification_token:''
+            
         });
 
 
@@ -73,7 +79,11 @@ function ProfilePage() {
                     cybersecurity_familiarity: data.cybersecurity_familiarity || '',
                     certifications: data.certifications || [] , 
                     created_at: data.created_at || null, 
-                    user_role:data.user_role || ' '
+                    user_role:data.user_role || ' ', 
+                    linkedin_link:data.linkedin_link || '', 
+                    // student_email: data.student_email || '',
+                    // verification_token: data.verification_token || '',
+                    // student_verified: data.student_verified || false
                 });
             }
         };
@@ -157,8 +167,282 @@ function ProfilePage() {
 
     // Helper function to get single select value
         const getSingleValue = (selectId) => {
-            return document.getElementById(selectId).value;
+            const element= document.getElementById(selectId);
+            return element ? element.value : '';
         };
+
+
+
+    // const sendVerificationEmail = async (schoolEmail, userName) => {
+    //     try {
+    //         // Generate verification token
+    //         const verificationToken = uuidv4()
+
+    //         // Call your edge function
+    //         const response = await fetch(
+    //         `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/send-verification-email`,
+    //         {
+    //             method: "POST",
+    //             headers: {
+    //             "Content-Type": "application/json",
+    //             Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
+    //             },
+    //             body: JSON.stringify({
+    //             schoolEmail,
+    //             verificationToken,
+    //             userName,
+    //             }),
+    //         })
+
+    //         const data = await response.json()
+
+    //         if (!response.ok) {
+    //         throw new Error(data.error || "Failed to send verification email")
+    //         }
+
+    //         return { success: true, verificationToken }
+    //     } catch (error) {
+    //         console.error("Error sending verification email:", error)
+    //         throw error
+    //     }
+    // }
+
+
+
+    // const handleUpdatePreferences = async () => {
+    // if (!userId) {
+    //     alert('User not logged in');
+    //     return;
+    // }
+
+    // setLoading(true);
+
+    // const updatedPreferences = {
+    //     clerk_user_id: userId,
+    //     cuny_campus: getSingleValue('cuny'),
+    //     major: getSelectedValues('major'),
+    //     minor: getSingleValue('minor'),
+    //     interested_industry: getSelectedValues('industry'),
+    //     career_goals: getSingleValue('career-goals'),
+    //     technical_experience: getSingleValue('tech-exp'),
+    //     technical_knowledge: getSingleValue('tech-knowledge'),
+    //     cybersecurity_interest: getSelectedValues('cybersec-interest'),
+    //     cybersecurity_familiarity: getSingleValue('security-Familiarity'),
+    //     certifications: getSelectedValues('certs'),
+    //     user_role: getSingleValue('curr-status'),
+    // };
+
+    // // Only add linkedin_link if the field exists (Professional role)
+    // const linkedinElement = document.getElementById('linkedin-link');
+    // if (linkedinElement) {
+    //     updatedPreferences.linkedin_link = linkedinElement.value;
+    // } else {
+    //     updatedPreferences.linkedin_link = '';
+    // }
+
+    // try {
+    //     // If user selected "Student", handle student email verification
+    //     if (updatedPreferences.user_role === "Student") {
+    //         const schoolEmailElement = document.getElementById("school-email");
+    //         const schoolEmail = schoolEmailElement?.value;
+
+    //         if (!schoolEmail) {
+    //             alert("Please enter your school email");
+    //             setLoading(false);
+    //             return;
+    //         }
+
+    //         if (!schoolEmail.endsWith(".edu")) {
+    //             alert("Please use a valid .edu email address");
+    //             setLoading(false);
+    //             return;
+    //         }
+
+    //         try {
+    //             const { verificationToken } = await sendVerificationEmail(
+    //                 schoolEmail,
+    //                 user?.firstName
+    //             );
+
+    //             updatedPreferences.student_email = schoolEmail;
+    //             updatedPreferences.verification_token = verificationToken;
+    //             updatedPreferences.student_verified = false;
+    //         } catch (emailError) {
+    //             console.error("Verification email error:", emailError);
+    //             alert("Failed to send verification email. Please try again.");
+    //             setLoading(false);
+    //             return;
+    //         }
+    //     } else {
+    //         updatedPreferences.student_email = null;
+    //         updatedPreferences.verification_token = null;
+    //         updatedPreferences.student_verified = false;
+    //     }
+
+    //     const { data, error } = await supabase
+    //         .from('user_preferences')
+    //         .upsert(updatedPreferences, { onConflict: 'clerk_user_id' });
+
+    //     setLoading(false);
+
+    //     if (error) {
+    //         console.error('Error updating preferences:', error);
+    //         alert('Failed to update preferences');
+    //     } else {
+    //         setPreferences({
+    //             cuny_campus: updatedPreferences.cuny_campus,
+    //             major: updatedPreferences.major,
+    //             minor: updatedPreferences.minor,
+    //             interested_industry: updatedPreferences.interested_industry,
+    //             career_goals: updatedPreferences.career_goals,
+    //             technical_experience: updatedPreferences.technical_experience,
+    //             technical_knowledge: updatedPreferences.technical_knowledge,
+    //             cybersecurity_interest: updatedPreferences.cybersecurity_interest,
+    //             cybersecurity_familiarity: updatedPreferences.cybersecurity_familiarity,
+    //             certifications: updatedPreferences.certifications, 
+    //             created_at: preferences.created_at,
+    //             user_role: updatedPreferences.user_role,
+    //             linkedin_link: updatedPreferences.linkedin_link,
+    //             student_email: updatedPreferences.student_email || '',
+    //             verification_token: updatedPreferences.verification_token || '',
+    //             student_verified: updatedPreferences.student_verified || false
+    //         });
+    //         setIsEditing(false);
+
+    //         if (updatedPreferences.user_role === "Student") {
+    //             alert("Preferences updated! Check your email to verify your student status.");
+    //         } else {
+    //             alert('Preferences updated successfully!');
+    //         }
+    //     }
+    //     } catch (error) {
+    //         console.error('Error updating preferences:', error);
+    //         alert('Failed to update preferences');
+    //         setLoading(false);
+    //     }
+    // };
+
+    // const handleUpdatePreferences = async () => {
+    //     if (!userId) {
+    //         alert('User not logged in');
+    //         return;
+    //     }
+
+    //     setLoading(true);
+
+    //     const updatedPreferences = {
+    //         clerk_user_id: userId,
+    //         cuny_campus: getSingleValue('cuny'),
+    //         major: getSelectedValues('major'),
+    //         minor: getSingleValue('minor'),
+    //         interested_industry: getSelectedValues('industry'),
+    //         career_goals: getSingleValue('career-goals'),
+    //         technical_experience: getSingleValue('tech-exp'),
+    //         technical_knowledge: getSingleValue('tech-knowledge'),
+    //         cybersecurity_interest: getSelectedValues('cybersec-interest'),
+    //         cybersecurity_familiarity: getSingleValue('security-Familiarity'),
+    //         certifications: getSelectedValues('certs'),
+    //         user_role: getSingleValue('curr-status'),
+    //         linkedin_link: getSingleValue('linkedin-link'),
+    //     };
+
+    //     try {
+    //         // If user selected "Student", handle student email verification
+    //         if (updatedPreferences.user_role === "Student") {
+    //             const schoolEmail = document.getElementById("school-email")?.value
+
+    //             if (!schoolEmail) {
+    //                 alert("Please enter your school email")
+    //                 setLoading(false)
+    //                 return
+    //             }
+
+    //             if (!schoolEmail.endsWith(".edu")) {
+    //                 alert("Please use a valid .edu email address")
+    //                 setLoading(false)
+    //                 return
+    //             }
+
+    //             try {
+    //                 const { verificationToken } = await sendVerificationEmail(
+    //                     schoolEmail,
+    //                     user?.firstName
+    //                 )
+
+    //                 updatedPreferences.student_email = schoolEmail
+    //                 updatedPreferences.verification_token = verificationToken
+    //                 updatedPreferences.student_verified = false
+    //             } catch (emailError) {
+    //                 console.error("Verification email error:", emailError)
+    //                 alert("Failed to send verification email. Please try again.")
+    //                 setLoading(false)
+    //                 return
+    //             }
+    //         } else {
+    //             updatedPreferences.student_email = null
+    //             updatedPreferences.verification_token = null
+    //             updatedPreferences.student_verified = false
+    //         }
+
+    //         const { data, error } = await supabase
+    //             .from('user_preferences')
+    //             .upsert(updatedPreferences, { onConflict: 'clerk_user_id' });
+
+    //         setLoading(false);
+
+    //         if (error) {
+    //             console.error('Error updating preferences:', error);
+    //             alert('Failed to update preferences');
+    //         } else {
+    //             setPreferences({
+    //                 cuny_campus: updatedPreferences.cuny_campus,
+    //                 major: updatedPreferences.major,
+    //                 minor: updatedPreferences.minor,
+    //                 interested_industry: updatedPreferences.interested_industry,
+    //                 career_goals: updatedPreferences.career_goals,
+    //                 technical_experience: updatedPreferences.technical_experience,
+    //                 technical_knowledge: updatedPreferences.technical_knowledge,
+    //                 cybersecurity_interest: updatedPreferences.cybersecurity_interest,
+    //                 cybersecurity_familiarity: updatedPreferences.cybersecurity_familiarity,
+    //                 certifications: updatedPreferences.certifications, 
+    //                 created_at: preferences.created_at,
+    //                 user_role: updatedPreferences.user_role,
+    //                 linkedin_link: updatedPreferences.linkedin_link,
+    //                 student_email: updatedPreferences.student_email || '',
+    //                 verification_token: updatedPreferences.verification_token || '',
+    //                 student_verified: updatedPreferences.student_verified || false
+    //             });
+    //             setIsEditing(false);
+
+    //             if (updatedPreferences.user_role === "Student") {
+    //                 alert("Preferences updated! Check your email to verify your student status.")
+    //             } else {
+    //                 alert('Preferences updated successfully!');
+    //             }
+    //         }
+    //     } catch (error) {
+    //         console.error('Error updating preferences:', error);
+    //         alert('Failed to update preferences');
+    //         setLoading(false);
+    //     }
+    // };
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // Save preferences to Supabase
         const handleUpdatePreferences = async () => {
@@ -181,7 +465,8 @@ function ProfilePage() {
                 cybersecurity_interest: getSelectedValues('cybersec-interest'),
                 cybersecurity_familiarity: getSingleValue('security-Familiarity'),
                 certifications: getSelectedValues('certs'),
-                user_role:getSingleValue('curr-status')
+                user_role:getSingleValue('curr-status'),
+                linkedin_link:getSingleValue('linkedin-link')
             };
 
             const { data, error } = await supabase
@@ -207,7 +492,8 @@ function ProfilePage() {
                     cybersecurity_familiarity: updatedPreferences.cybersecurity_familiarity,
                     certifications: updatedPreferences.certifications, 
                     created_at: preferences.created_at,
-                    user_role:updatedPreferences.user_role
+                    user_role:updatedPreferences.user_role,
+                    linkedin_link:updatedPreferences.linkedin_link
                 });
                 setIsEditing(false);
                 alert('Preferences updated successfully!');
@@ -501,15 +787,49 @@ function ProfilePage() {
 
                             <div id="Current-Status" className="mb-2"> 
                                 <label htmlFor="current-status" className="font-SubHeading font-medium text-base">What is your current status?</label>
-                                <select id="curr-status"  defaultValue={preferences.user_role}
+                                <select id="curr-status"   
+                                defaultValue={preferences.user_role}
+                                onChange={(e) =>  setPreferences({...preferences,user_role:e.target.value})}
                                 name="current-status" className="bg-[#F9F4F4] text-[#09090B] border-2 border-[#09090B] w-11/12 rounded-sm ">
                                     <option value="">No Selection</option>
                                     <option value="Student"> Student </option> 
                                     <option value="Intern">Intern </option> 
                                     <option value="New-Grad">New-Grad </option> 
                                     <option value="Professional">Professional </option>     
+                                    <option value="Senior Professional">Senior Professional</option>
                                 </select>
                             </div> 
+
+                            {preferences.user_role === 'Student' && (
+                                <div id="school-email-container" className="mb-2">
+                                    <label htmlFor="school-email" className="font-SubHeading font-medium text-base">
+                                        Enter your school email
+                                    </label>
+                                    <input
+                                        id="school-email"
+                                        type="email"
+                                        placeholder="your.name@school.edu"
+                                        defaultValue={preferences.student_email}
+                                        className="bg-[#F9F4F4] text-[#09090B] border-2 border-[#09090B] w-11/12 rounded-sm p-2"
+                                    />
+                                    <p className="text-sm text-gray-600 mt-1">Must be a .edu email address</p>
+                                </div>
+                            )}
+
+                            {preferences.user_role.includes('Professional') && ( 
+                                <div id="Linkedin-Link" > 
+                                <label className="font-SubHeading font-medium text-base" htmlFor="Linkedin-Link">Please put your Linkedin profile link </label> 
+                                <input 
+                                    id="linkedin-link"
+                                    placeholder="https://www.linkedin.com/in/your-link/" 
+                                    type="url"
+                                    className="bg-[#F9F4F4] text-[#09090B] border-2 border-[#09090B] w-11/12 rounded-sm"
+                                > 
+                                
+                                </input>
+                                
+                                </div>
+                            )}
 
                         </div>
                         
