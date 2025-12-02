@@ -13,6 +13,16 @@ import ProfilePage from './pages/ProfilePage';
 import EventsPage from './pages/EventsPage';
 import EventForm from './components/EventForm';
 import ForumPage from './pages/ForumPage'
+import LearnPage from './pages/LearnPage'; 
+import ITResourcePage from './pages/ITResourcesPage';
+import NetworkResourcePage from './pages/NetworkResourcePage';
+import OsResourcePage from './pages/OsResourcesPage';
+import SecurityResourcePage from './pages/SecurityResources';
+import CloudResourcePage from './pages/CloudResourcesPage';
+
+
+
+
 
 // Simple ProtectedRoute component
 const ProtectedRoute = ({ children, requiresForm = false }) => {
@@ -49,7 +59,13 @@ function App() {
                 <Route path="/current-events" element={<CurrentEventPage/>} />
                 <Route path="/events" element={<EventsPage/>}/>
                 <Route path="/eventform" element={<EventForm/>}/>
-                <Route path="/forum" element={<ForumPage/>}/>
+                <Route path="/forum" element={<ForumPage/>}/> 
+                <Route path="/learn" element={<LearnPage/>}/>
+                <Route path="/IT-Resources" element={<ITResourcePage/>}/>
+                <Route path="/Network-Resources" element={<NetworkResourcePage/>}/> 
+                <Route path="/OS-Resources" element={<OsResourcePage/>}/>
+                <Route path="/Security-Resources" element={<SecurityResourcePage/>}/>
+                <Route path="/Cloud-Resources" element={<CloudResourcePage/>}/>
                 <Route path="/tos" element={<Tos/>} />
 
                 {/* Protected routes */}
