@@ -7,10 +7,20 @@ import { useClerk } from '@clerk/clerk-react';
 import { useUser } from "@clerk/clerk-react";
 import { Carousel } from "flowbite-react";
 import SlideInText from "../components/SlideInText";
+import { useEffect } from 'react';
 
 function LearnPage () { 
 
                     const {signOut,isSignedIn} = useClerk();
+
+
+                    useEffect(() => {
+                        document.documentElement.style.scrollBehavior = 'auto';
+                        window.scrollTo(0, 0);
+                        setTimeout(() => {
+                            document.documentElement.style.scrollBehavior = 'smooth';
+                        }, 0);
+                    }, [location.pathname]);
 
 
                     const handleSignOut = async () => {
@@ -53,7 +63,7 @@ function LearnPage () {
                                     </div> 
 
                                     <div id="img-container"> 
-                                        <BookOpenText size={192} color={"#00A6FB"}/>
+                                        <BookOpenText className="animate-pulse" size={192} color={"#00A6FB"}/>
                                     </div>
                                 </section> 
                             </SlideInText>

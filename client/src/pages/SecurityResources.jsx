@@ -6,13 +6,21 @@ import { useClerk } from '@clerk/clerk-react';
 import { useUser } from "@clerk/clerk-react";
 import {EarthLock} from 'lucide-react'
 import SlideInText from "../components/SlideInText";
-
+import { useEffect } from 'react';
 
 
 
 function SecurityResourcePage () { 
 
-        const {signOut,isSignedIn} = useClerk();
+        const {signOut,isSignedIn} = useClerk();  
+
+        useEffect(() => {
+            document.documentElement.style.scrollBehavior = 'auto';
+            window.scrollTo(0, 0);
+            setTimeout(() => {
+                document.documentElement.style.scrollBehavior = 'smooth';
+            }, 0);
+        }, [location.pathname]);
 
 
                     const handleSignOut = async () => {
@@ -53,7 +61,7 @@ function SecurityResourcePage () {
                                         </div>  
 
                                         <div id="logo-container"> 
-                                            <EarthLock size={192} color={"#00A6FB"}/>
+                                            <EarthLock  className="animate-pulse" size={192} color={"#00A6FB"}/>
                                         </div>
                                     </div>  
                                 </section> 
@@ -62,6 +70,9 @@ function SecurityResourcePage () {
                              
                                 <section id="resources"> 
                                     <SlideInText>
+                                        <div className="mb-2 mt-2"> 
+                                            <h1 className="text-[#F9F4F4] text-4xl text-center font-Heading">Available Resources</h1> 
+                                        </div>
                                         <div className="flex gap-4 justify-center items-center mt-8 mb-8"> 
                                             <SmallHeroCard>
                                                 <div id="card-content-container">   
