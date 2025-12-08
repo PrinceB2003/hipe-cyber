@@ -6,7 +6,8 @@ import NavBar from '../components/NavBar';
 import Footer from '../components/Footer';
 import { 
     Shield, Users, Ban, UserCheck, Search, Clock, 
-    Trash2, Loader2, AlertTriangle, Crown, CheckCircle } from 'lucide-react';
+    Trash2, Loader2, AlertTriangle, Crown, CheckCircle 
+} from 'lucide-react';
 
 function AdminDashboard() {
     const { user, isLoaded } = useUser();
@@ -31,60 +32,21 @@ function AdminDashboard() {
     const [currentUserRole, setCurrentUserRole] = useState(null);
 
     // Check if current user is admin
-    // useEffect(() => {
-    //     const checkAdminStatus = async () => {
-    //         if (!user) return;
-
-    //         const { data } = await supabase
-    //             .from('user_preferences')
-    //             .select('user_role')
-    //             .eq('user_id', user.id)
-    //             .single();
-
-    //         if (data?.user_role !== 'admin') {
-    //             navigate('/forum');
-    //             return;
-    //         }
-
-    //         setCurrentUserRole(data.user_role);
-    //     };
-
-    //     if (isLoaded) {
-    //         checkAdminStatus();
-    //     }
-    // }, [user, isLoaded, navigate]);
-
-    // Check if current user is admin
     useEffect(() => {
         const checkAdminStatus = async () => {
-            if (!user) {
-                console.log('No user found');
-                return;
-            }
+            if (!user) return;
 
-            console.log('Checking admin status for:', user.id);
-
-            const { data, error } = await supabase
+            const { data } = await supabase
                 .from('user_preferences')
                 .select('user_role')
                 .eq('clerk_user_id', user.id)
                 .single();
 
-            console.log('Admin check result - Data:', data, 'Error:', error);
-
-            if (error) {
-                console.error('Error fetching admin status:', error);
-                navigate('/forum');
-                return;
-            }
-
             if (data?.user_role !== 'admin') {
-                console.log('User is not admin, redirecting');
                 navigate('/forum');
                 return;
             }
 
-            console.log('User is admin!');
             setCurrentUserRole(data.user_role);
         };
 
@@ -135,7 +97,7 @@ function AdminDashboard() {
                 banned_at: new Date().toISOString(),
                 ban_reason: banReason
             })
-            .eq('user_id', selectedUser.user_id);
+            .eq('clerk_user_id', selectedUser.clerk_user_id);
 
         if (error) {
             console.error('Error banning user:', error);
@@ -143,15 +105,15 @@ function AdminDashboard() {
         } else {
             // Log moderation action
             await supabase.from('moderation_actions').insert({
-                moderator_id: user.id,
-                target_user_id: selectedUser.user_id,
+                moderator_clerk_id: user.id,
+                target_clerk_id: selectedUser.clerk_user_id,
                 action_type: 'ban',
                 reason: banReason
             });
 
             // Update local state
             setUsers(users.map(u =>
-                u.user_id === selectedUser.user_id
+                u.clerk_user_id === selectedUser.clerk_user_id
                     ? { ...u, is_banned: true, ban_reason: banReason }
                     : u
             ));
@@ -164,7 +126,7 @@ function AdminDashboard() {
         setActionLoading(false);
     };
 
-    const handleUnbanUser = async (userId) => {
+    const handleUnbanUser = async (clerkUserId) => {
         if (!confirm('Are you sure you want to unban this user?')) return;
 
         setActionLoading(true);
@@ -176,20 +138,20 @@ function AdminDashboard() {
                 banned_at: null,
                 ban_reason: null
             })
-            .eq('user_id', userId);
+            .eq('clerk_user_id', clerkUserId);
 
         if (error) {
             console.error('Error unbanning user:', error);
             alert('Failed to unban user');
         } else {
             await supabase.from('moderation_actions').insert({
-                moderator_id: user.id,
-                target_user_id: userId,
+                moderator_clerk_id: user.id,
+                target_clerk_id: clerkUserId,
                 action_type: 'unban'
             });
 
             setUsers(users.map(u =>
-                u.user_id === userId
+                u.clerk_user_id === clerkUserId
                     ? { ...u, is_banned: false, banned_at: null, ban_reason: null }
                     : u
             ));
@@ -215,22 +177,22 @@ function AdminDashboard() {
                 is_muted: true,
                 muted_until: mutedUntil.toISOString()
             })
-            .eq('user_id', selectedUser.user_id);
+            .eq('clerk_user_id', selectedUser.clerk_user_id);
 
         if (error) {
             console.error('Error muting user:', error);
             alert('Failed to mute user');
         } else {
             await supabase.from('moderation_actions').insert({
-                moderator_id: user.id,
-                target_user_id: selectedUser.user_id,
+                moderator_clerk_id: user.id,
+                target_clerk_id: selectedUser.clerk_user_id,
                 action_type: 'mute',
                 reason: muteReason,
                 metadata: { duration_minutes: muteDuration }
             });
 
             setUsers(users.map(u =>
-                u.user_id === selectedUser.user_id
+                u.clerk_user_id === selectedUser.clerk_user_id
                     ? { ...u, is_muted: true, muted_until: mutedUntil.toISOString() }
                     : u
             ));
@@ -243,7 +205,7 @@ function AdminDashboard() {
         setActionLoading(false);
     };
 
-    const handleUnmuteUser = async (userId) => {
+    const handleUnmuteUser = async (clerkUserId) => {
         setActionLoading(true);
 
         const { error } = await supabase
@@ -252,20 +214,20 @@ function AdminDashboard() {
                 is_muted: false,
                 muted_until: null
             })
-            .eq('user_id', userId);
+            .eq('clerk_user_id', clerkUserId);
 
         if (error) {
             console.error('Error unmuting user:', error);
             alert('Failed to unmute user');
         } else {
             await supabase.from('moderation_actions').insert({
-                moderator_id: user.id,
-                target_user_id: userId,
+                moderator_clerk_id: user.id,
+                target_clerk_id: clerkUserId,
                 action_type: 'unmute'
             });
 
             setUsers(users.map(u =>
-                u.user_id === userId
+                u.clerk_user_id === clerkUserId
                     ? { ...u, is_muted: false, muted_until: null }
                     : u
             ));
@@ -282,7 +244,7 @@ function AdminDashboard() {
         const { error } = await supabase
             .from('user_preferences')
             .update({ user_role: newRole })
-            .eq('user_id', selectedUser.user_id);
+            .eq('clerk_user_id', selectedUser.clerk_user_id);
 
         if (error) {
             console.error('Error changing role:', error);
@@ -291,13 +253,13 @@ function AdminDashboard() {
             const actionType = newRole === 'moderator' ? 'assign_moderator' : 'revoke_moderator';
             
             await supabase.from('moderation_actions').insert({
-                moderator_id: user.id,
-                target_user_id: selectedUser.user_id,
+                moderator_clerk_id: user.id,
+                target_clerk_id: selectedUser.clerk_user_id,
                 action_type: actionType
             });
 
             setUsers(users.map(u =>
-                u.user_id === selectedUser.user_id
+                u.clerk_user_id === selectedUser.clerk_user_id
                     ? { ...u, user_role: newRole }
                     : u
             ));
@@ -429,7 +391,7 @@ function AdminDashboard() {
                                 </thead>
                                 <tbody className="divide-y divide-[#00A6FB]/10">
                                     {filteredUsers.map((u) => (
-                                        <tr key={u.user_id} className="hover:bg-[#0f0f0f]/50">
+                                        <tr key={u.clerk_user_id} className="hover:bg-[#0f0f0f]/50">
                                             <td className="px-6 py-4">
                                                 <div>
                                                     <p className="font-medium text-[#F9F4F4]">{u.username || 'Unknown'}</p>
@@ -475,7 +437,7 @@ function AdminDashboard() {
                                                         </button>
                                                     ) : (
                                                         <button
-                                                            onClick={() => handleUnbanUser(u.user_id)}
+                                                            onClick={() => handleUnbanUser(u.clerk_user_id)}
                                                             disabled={actionLoading}
                                                             className="px-3 py-1 bg-green-500/20 text-green-400 rounded hover:bg-green-500/30 text-xs"
                                                         >
@@ -495,7 +457,7 @@ function AdminDashboard() {
                                                         </button>
                                                     ) : (
                                                         <button
-                                                            onClick={() => handleUnmuteUser(u.user_id)}
+                                                            onClick={() => handleUnmuteUser(u.clerk_user_id)}
                                                             disabled={actionLoading}
                                                             className="px-3 py-1 bg-green-500/20 text-green-400 rounded hover:bg-green-500/30 text-xs"
                                                         >
