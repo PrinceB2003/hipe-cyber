@@ -171,334 +171,61 @@ function ProfilePage() {
             return element ? element.value : '';
         };
 
-
-
-    // const sendVerificationEmail = async (schoolEmail, userName) => {
-    //     try {
-    //         // Generate verification token
-    //         const verificationToken = uuidv4()
-
-    //         // Call your edge function
-    //         const response = await fetch(
-    //         `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/send-verification-email`,
-    //         {
-    //             method: "POST",
-    //             headers: {
-    //             "Content-Type": "application/json",
-    //             Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
-    //             },
-    //             body: JSON.stringify({
-    //             schoolEmail,
-    //             verificationToken,
-    //             userName,
-    //             }),
-    //         })
-
-    //         const data = await response.json()
-
-    //         if (!response.ok) {
-    //         throw new Error(data.error || "Failed to send verification email")
-    //         }
-
-    //         return { success: true, verificationToken }
-    //     } catch (error) {
-    //         console.error("Error sending verification email:", error)
-    //         throw error
-    //     }
-    // }
-
-
-
-    // const handleUpdatePreferences = async () => {
-    // if (!userId) {
-    //     alert('User not logged in');
-    //     return;
-    // }
-
-    // setLoading(true);
-
-    // const updatedPreferences = {
-    //     clerk_user_id: userId,
-    //     cuny_campus: getSingleValue('cuny'),
-    //     major: getSelectedValues('major'),
-    //     minor: getSingleValue('minor'),
-    //     interested_industry: getSelectedValues('industry'),
-    //     career_goals: getSingleValue('career-goals'),
-    //     technical_experience: getSingleValue('tech-exp'),
-    //     technical_knowledge: getSingleValue('tech-knowledge'),
-    //     cybersecurity_interest: getSelectedValues('cybersec-interest'),
-    //     cybersecurity_familiarity: getSingleValue('security-Familiarity'),
-    //     certifications: getSelectedValues('certs'),
-    //     user_role: getSingleValue('curr-status'),
-    // };
-
-    // // Only add linkedin_link if the field exists (Professional role)
-    // const linkedinElement = document.getElementById('linkedin-link');
-    // if (linkedinElement) {
-    //     updatedPreferences.linkedin_link = linkedinElement.value;
-    // } else {
-    //     updatedPreferences.linkedin_link = '';
-    // }
-
-    // try {
-    //     // If user selected "Student", handle student email verification
-    //     if (updatedPreferences.user_role === "Student") {
-    //         const schoolEmailElement = document.getElementById("school-email");
-    //         const schoolEmail = schoolEmailElement?.value;
-
-    //         if (!schoolEmail) {
-    //             alert("Please enter your school email");
-    //             setLoading(false);
-    //             return;
-    //         }
-
-    //         if (!schoolEmail.endsWith(".edu")) {
-    //             alert("Please use a valid .edu email address");
-    //             setLoading(false);
-    //             return;
-    //         }
-
-    //         try {
-    //             const { verificationToken } = await sendVerificationEmail(
-    //                 schoolEmail,
-    //                 user?.firstName
-    //             );
-
-    //             updatedPreferences.student_email = schoolEmail;
-    //             updatedPreferences.verification_token = verificationToken;
-    //             updatedPreferences.student_verified = false;
-    //         } catch (emailError) {
-    //             console.error("Verification email error:", emailError);
-    //             alert("Failed to send verification email. Please try again.");
-    //             setLoading(false);
-    //             return;
-    //         }
-    //     } else {
-    //         updatedPreferences.student_email = null;
-    //         updatedPreferences.verification_token = null;
-    //         updatedPreferences.student_verified = false;
-    //     }
-
-    //     const { data, error } = await supabase
-    //         .from('user_preferences')
-    //         .upsert(updatedPreferences, { onConflict: 'clerk_user_id' });
-
-    //     setLoading(false);
-
-    //     if (error) {
-    //         console.error('Error updating preferences:', error);
-    //         alert('Failed to update preferences');
-    //     } else {
-    //         setPreferences({
-    //             cuny_campus: updatedPreferences.cuny_campus,
-    //             major: updatedPreferences.major,
-    //             minor: updatedPreferences.minor,
-    //             interested_industry: updatedPreferences.interested_industry,
-    //             career_goals: updatedPreferences.career_goals,
-    //             technical_experience: updatedPreferences.technical_experience,
-    //             technical_knowledge: updatedPreferences.technical_knowledge,
-    //             cybersecurity_interest: updatedPreferences.cybersecurity_interest,
-    //             cybersecurity_familiarity: updatedPreferences.cybersecurity_familiarity,
-    //             certifications: updatedPreferences.certifications, 
-    //             created_at: preferences.created_at,
-    //             user_role: updatedPreferences.user_role,
-    //             linkedin_link: updatedPreferences.linkedin_link,
-    //             student_email: updatedPreferences.student_email || '',
-    //             verification_token: updatedPreferences.verification_token || '',
-    //             student_verified: updatedPreferences.student_verified || false
-    //         });
-    //         setIsEditing(false);
-
-    //         if (updatedPreferences.user_role === "Student") {
-    //             alert("Preferences updated! Check your email to verify your student status.");
-    //         } else {
-    //             alert('Preferences updated successfully!');
-    //         }
-    //     }
-    //     } catch (error) {
-    //         console.error('Error updating preferences:', error);
-    //         alert('Failed to update preferences');
-    //         setLoading(false);
-    //     }
-    // };
-
-    // const handleUpdatePreferences = async () => {
-    //     if (!userId) {
-    //         alert('User not logged in');
-    //         return;
-    //     }
-
-    //     setLoading(true);
-
-    //     const updatedPreferences = {
-    //         clerk_user_id: userId,
-    //         cuny_campus: getSingleValue('cuny'),
-    //         major: getSelectedValues('major'),
-    //         minor: getSingleValue('minor'),
-    //         interested_industry: getSelectedValues('industry'),
-    //         career_goals: getSingleValue('career-goals'),
-    //         technical_experience: getSingleValue('tech-exp'),
-    //         technical_knowledge: getSingleValue('tech-knowledge'),
-    //         cybersecurity_interest: getSelectedValues('cybersec-interest'),
-    //         cybersecurity_familiarity: getSingleValue('security-Familiarity'),
-    //         certifications: getSelectedValues('certs'),
-    //         user_role: getSingleValue('curr-status'),
-    //         linkedin_link: getSingleValue('linkedin-link'),
-    //     };
-
-    //     try {
-    //         // If user selected "Student", handle student email verification
-    //         if (updatedPreferences.user_role === "Student") {
-    //             const schoolEmail = document.getElementById("school-email")?.value
-
-    //             if (!schoolEmail) {
-    //                 alert("Please enter your school email")
-    //                 setLoading(false)
-    //                 return
-    //             }
-
-    //             if (!schoolEmail.endsWith(".edu")) {
-    //                 alert("Please use a valid .edu email address")
-    //                 setLoading(false)
-    //                 return
-    //             }
-
-    //             try {
-    //                 const { verificationToken } = await sendVerificationEmail(
-    //                     schoolEmail,
-    //                     user?.firstName
-    //                 )
-
-    //                 updatedPreferences.student_email = schoolEmail
-    //                 updatedPreferences.verification_token = verificationToken
-    //                 updatedPreferences.student_verified = false
-    //             } catch (emailError) {
-    //                 console.error("Verification email error:", emailError)
-    //                 alert("Failed to send verification email. Please try again.")
-    //                 setLoading(false)
-    //                 return
-    //             }
-    //         } else {
-    //             updatedPreferences.student_email = null
-    //             updatedPreferences.verification_token = null
-    //             updatedPreferences.student_verified = false
-    //         }
-
-    //         const { data, error } = await supabase
-    //             .from('user_preferences')
-    //             .upsert(updatedPreferences, { onConflict: 'clerk_user_id' });
-
-    //         setLoading(false);
-
-    //         if (error) {
-    //             console.error('Error updating preferences:', error);
-    //             alert('Failed to update preferences');
-    //         } else {
-    //             setPreferences({
-    //                 cuny_campus: updatedPreferences.cuny_campus,
-    //                 major: updatedPreferences.major,
-    //                 minor: updatedPreferences.minor,
-    //                 interested_industry: updatedPreferences.interested_industry,
-    //                 career_goals: updatedPreferences.career_goals,
-    //                 technical_experience: updatedPreferences.technical_experience,
-    //                 technical_knowledge: updatedPreferences.technical_knowledge,
-    //                 cybersecurity_interest: updatedPreferences.cybersecurity_interest,
-    //                 cybersecurity_familiarity: updatedPreferences.cybersecurity_familiarity,
-    //                 certifications: updatedPreferences.certifications, 
-    //                 created_at: preferences.created_at,
-    //                 user_role: updatedPreferences.user_role,
-    //                 linkedin_link: updatedPreferences.linkedin_link,
-    //                 student_email: updatedPreferences.student_email || '',
-    //                 verification_token: updatedPreferences.verification_token || '',
-    //                 student_verified: updatedPreferences.student_verified || false
-    //             });
-    //             setIsEditing(false);
-
-    //             if (updatedPreferences.user_role === "Student") {
-    //                 alert("Preferences updated! Check your email to verify your student status.")
-    //             } else {
-    //                 alert('Preferences updated successfully!');
-    //             }
-    //         }
-    //     } catch (error) {
-    //         console.error('Error updating preferences:', error);
-    //         alert('Failed to update preferences');
-    //         setLoading(false);
-    //     }
-    // };
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    // Save preferences to Supabase
         const handleUpdatePreferences = async () => {
-            if (!userId) {
-                alert('User not logged in');
-                return;
-            }
+    if (!userId) {
+        alert('User not logged in');
+        return;
+    }
 
-            setLoading(true);
+    setLoading(true);
 
-            const updatedPreferences = {
-                clerk_user_id: userId,
-                cuny_campus: getSingleValue('cuny'),
-                major: getSelectedValues('major'),
-                minor: getSingleValue('minor'),
-                interested_industry: getSelectedValues('industry'),
-                career_goals: getSingleValue('career-goals'),
-                technical_experience: getSingleValue('tech-exp'),
-                technical_knowledge: getSingleValue('tech-knowledge'),
-                cybersecurity_interest: getSelectedValues('cybersec-interest'),
-                cybersecurity_familiarity: getSingleValue('security-Familiarity'),
-                certifications: getSelectedValues('certs'),
-                user_role:getSingleValue('curr-status'),
-                linkedin_link:getSingleValue('linkedin-link')
-            };
+    const updatedPreferences = {
+        clerk_user_id: userId,
+        username: user.username || user.fullName || user.firstName || 'Unknown User',
+        email: user.emailAddresses?.[0]?.emailAddress || '',
+        cuny_campus: getSingleValue('cuny'),
+        major: getSelectedValues('major'),
+        minor: getSingleValue('minor'),
+        interested_industry: getSelectedValues('industry'),
+        career_goals: getSingleValue('career-goals'),
+        technical_experience: getSingleValue('tech-exp'),
+        technical_knowledge: getSingleValue('tech-knowledge'),
+        cybersecurity_interest: getSelectedValues('cybersec-interest'),
+        cybersecurity_familiarity: getSingleValue('security-Familiarity'),
+        certifications: getSelectedValues('certs'),
+        user_role: getSingleValue('curr-status'),
+        linkedin_link: getSingleValue('linkedin-link')
+    };
 
-            const { data, error } = await supabase
-                .from('user_preferences')
-                .upsert(updatedPreferences, { onConflict: 'clerk_user_id' });
+    const { data, error } = await supabase
+        .from('user_preferences')
+        .upsert(updatedPreferences, { onConflict: 'clerk_user_id' });
 
-            setLoading(false);
+    setLoading(false);
 
-            if (error) {
-                console.error('Error updating preferences:', error);
-                alert('Failed to update preferences');
-            } else {
-                // Update local state and switch to view mode
-                setPreferences({
-                    cuny_campus: updatedPreferences.cuny_campus,
-                    major: updatedPreferences.major,
-                    minor: updatedPreferences.minor,
-                    interested_industry: updatedPreferences.interested_industry,
-                    career_goals: updatedPreferences.career_goals,
-                    technical_experience: updatedPreferences.technical_experience,
-                    technical_knowledge: updatedPreferences.technical_knowledge,
-                    cybersecurity_interest: updatedPreferences.cybersecurity_interest,
-                    cybersecurity_familiarity: updatedPreferences.cybersecurity_familiarity,
-                    certifications: updatedPreferences.certifications, 
-                    created_at: preferences.created_at,
-                    user_role:updatedPreferences.user_role,
-                    linkedin_link:updatedPreferences.linkedin_link
-                });
-                setIsEditing(false);
-                alert('Preferences updated successfully!');
-            }
-        };
+    if (error) {
+        console.error('Error updating preferences:', error);
+        alert('Failed to update preferences');
+    } else {
+        setPreferences({
+            cuny_campus: updatedPreferences.cuny_campus,
+            major: updatedPreferences.major,
+            minor: updatedPreferences.minor,
+            interested_industry: updatedPreferences.interested_industry,
+            career_goals: updatedPreferences.career_goals,
+            technical_experience: updatedPreferences.technical_experience,
+            technical_knowledge: updatedPreferences.technical_knowledge,
+            cybersecurity_interest: updatedPreferences.cybersecurity_interest,
+            cybersecurity_familiarity: updatedPreferences.cybersecurity_familiarity,
+            certifications: updatedPreferences.certifications, 
+            created_at: preferences.created_at,
+            user_role: updatedPreferences.user_role,
+            linkedin_link: updatedPreferences.linkedin_link
+        });
+        setIsEditing(false);
+        alert('Preferences updated successfully!');
+    }
+};
 
     // Helper to display array as comma-separated text
         const displayArray = (arr) => {
