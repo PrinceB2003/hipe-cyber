@@ -8,7 +8,7 @@ import SlideInText from "../components/SlideInText";
 import { useClerk } from '@clerk/clerk-react';
 import { useNavigate } from 'react-router-dom';
 import EventPopUp from "../components/EventPopUp";
-
+import { useCurrentUserData } from '../hooks/useCurrentUserData';
 
 function EventsPage(){
     const [events, setEvents] = useState([]);
@@ -19,6 +19,7 @@ function EventsPage(){
     const navigate = useNavigate();  
     const [ShowPopUp, setShowPopUp] = useState(false);
     const [currEventId,setCurrEventID]=useState(null);
+    const { currentUserData } = useCurrentUserData();
     const { user } = useUser()
 
     useEffect(() => {
@@ -77,6 +78,11 @@ function EventsPage(){
                 }, 1500);
             }
 
+            if (currentUserData?.is_banned) {
+                alert('You are banned and cannot register for events.');
+                return;
+            }
+
             else if(!isSignedIn){ 
                 navigate('/sign-in');
             }
@@ -127,9 +133,13 @@ function EventsPage(){
                     <td className="font-Text pl-8 pr-8 pt-4 pb-4 border-b-2"><div>{event.event_type}</div></td>
                     <td className="font-Text pl-8 pr-8 pt-4 pb-4 border-b-2"><div>{new Date(event.reg_deadline).toLocaleString()}</div></td>
                     <td className="font-Text pl-8 pr-8 pt-4 pb-4 border-b-2"><div><button  
-                                                                                    onClick={()=>handleRegister(event)} 
+                                                                                    onClick={()=>handleRegister(event)}
+                                                                                    disabled={currentUserData?.is_banned} 
                                                                                     className="font-Text font-small text-center text-[#F9F4F4] rounded-full bg-[#00A6FB] h-6 w-32  cursor-pointer hover:scale-125 transition"> 
-                                                                                        {isSignedIn? "Register": "Sign In to Register"}
+                                                                                        {isSignedIn 
+                                                                                            ? (currentUserData?.is_banned ? 'You are Banned' : 'Register')
+                                                                                            : 'Sign In to Register'
+                                                                                        }
                                                                         </button></div></td>
                                                                     <td className="font-Text pl-8 pr-8 pt-4 pb-4 border-b-2"> 
                                                                         {isHost && (
