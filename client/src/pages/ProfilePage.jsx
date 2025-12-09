@@ -245,7 +245,7 @@ function ProfilePage() {
 
     return( 
         <>  
-            <NavBar className=""> 
+            <NavBar> 
                     <a href="/" className="hover:text-[#00A6FB]"> Home</a>
                     <Link to="/#features" className="hover:text-[#00A6FB]">Features</Link>
                     <button 

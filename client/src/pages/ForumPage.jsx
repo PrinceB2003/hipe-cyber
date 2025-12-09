@@ -9,6 +9,7 @@ import { supabase } from "../lib/supabase";
 import { useState, useEffect, useRef } from "react";
 import { Hash, Loader2, Trash2, Shield, AlertTriangle } from 'lucide-react';
 
+
 function ForumPage() {
     const { signOut, isSignedIn } = useClerk();
     const navigate = useNavigate();
@@ -23,8 +24,6 @@ function ForumPage() {
     const [offset, setOffset] = useState(0);
     const [deletingMessageId, setDeletingMessageId] = useState(null);
     
-    // console.log('Current Clerk User ID:', user?.id);
-    // NEW: Role state
     const [userRole, setUserRole] = useState('user');
     const [currentUserData, setCurrentUserData] = useState(null);
 
@@ -32,36 +31,28 @@ function ForumPage() {
     const messageListRef = useRef(null);
     const subscriptionRef = useRef(null);
 
-    // NEW: Fetch current user's role
     useEffect(() => {
-    const fetchUserRole = async () => {
-        if (!user) return;
+        const fetchUserRole = async () => {
+            if (!isLoaded || !user) return;
 
-        const { data, error } = await supabase
-            .from('user_preferences')
-            .select('user_role, is_banned, is_muted, muted_until')
-            .eq('clerk_user_id', user.id)
-            .single();
+            const { data, error } = await supabase
+                .from('user_preferences')
+                .select('user_role, is_banned, is_muted, muted_until')
+                .eq('clerk_user_id', user.id)
+                .single();
 
-        // DEBUG LINES
-        console.log('Clerk User ID:', user.id);
-        console.log('Query data:', data);
-        console.log('Query error:', error);
+            if (data) {
+                setUserRole(data.user_role || 'user');
+                setCurrentUserData(data);
+            }
+        };
 
-        if (data) {
-            setUserRole(data.user_role || 'user');
-            setCurrentUserData(data);
-        }
-    };
+        fetchUserRole();
+    }, [user, isLoaded]);
 
-    fetchUserRole();
-    }, [user]);
-
-    // NEW: Check if user can perform moderator actions
     const isModerator = userRole === 'moderator' || userRole === 'admin';
     const isAdmin = userRole === 'admin';
 
-    // NEW: Check if current user is muted
     const isMuted = currentUserData?.is_muted && 
         currentUserData?.muted_until && 
         new Date(currentUserData.muted_until) > new Date();
@@ -221,7 +212,6 @@ function ForumPage() {
     const handleSendMessage = async () => {
         if (!newMessage.trim() || !user || !activeChannelId || sending) return;
 
-        // NEW: Check if user is banned or muted
         if (currentUserData?.is_banned) {
             alert('You are banned and cannot send messages.');
             return;
@@ -255,7 +245,6 @@ function ForumPage() {
         setSending(false);
     };
 
-    // UPDATED: Delete message with moderator support
     const handleDeleteMessage = async (messageId, messageUserId) => {
         if (!user || deletingMessageId) return;
 
@@ -290,11 +279,10 @@ function ForumPage() {
                 return;
             }
 
-            // NEW: Log moderation action if moderator deleted someone else's message
             if (isModerator && !isOwnMessage) {
                 await supabase.from('moderation_actions').insert({
-                    moderator_id: user.id,
-                    target_user_id: messageUserId,
+                    moderator_clerk_id: user.id,
+                    target_clerk_id: messageUserId,
                     action_type: 'delete_message',
                     reason: 'Message deleted by moderator',
                     metadata: { message_id: messageId }
@@ -347,7 +335,6 @@ function ForumPage() {
         return channels.find(c => c.id === activeChannelId);
     };
 
-    // NEW: Get role badge color
     const getRoleBadgeColor = (role) => {
         switch (role) {
             case 'admin':
@@ -361,19 +348,11 @@ function ForumPage() {
 
     return (
         <>
-            <NavBar className>
+            <NavBar >
                 <a href="/" className="hover:text-[#00A6FB]">Home</a>
                 <Link to="/#features" className="hover:text-[#00A6FB]">Features</Link>
                 <Link to="/profile" className="hover:text-[#00A6FB]">{isSignedIn ? "Profile" : ""}</Link>
                 
-                {/* NEW: Admin Dashboard Link */}
-                {isAdmin && (
-                    <Link to="/admin" className="hover:text-[#00A6FB] flex items-center gap-1">
-                        <Shield size={16} />
-                        Admin
-                    </Link>
-                )}
-
                 <button
                     onClick={handleSignOut}
                     className="hover:text-[#00A6FB] cursor-pointer bg-transparent border-none text-inherit"
@@ -390,7 +369,6 @@ function ForumPage() {
                     <h2 className="font-SubHeading text-2xl text-[#F9F4F4] animate-pulse">A place to connect and grow together.</h2>
                 </div>
 
-                {/* NEW: Show mute warning */}
                 {isMuted && (
                     <div className="flex justify-center mb-4">
                         <div className="bg-yellow-500/20 border border-yellow-500 text-yellow-300 px-4 py-2 rounded-lg flex items-center gap-2">
@@ -400,7 +378,6 @@ function ForumPage() {
                     </div>
                 )}
 
-                {/* NEW: Show ban warning */}
                 {currentUserData?.is_banned && (
                     <div className="flex justify-center mb-4">
                         <div className="bg-red-500/20 border border-red-500 text-red-300 px-4 py-2 rounded-lg flex items-center gap-2">
@@ -489,7 +466,6 @@ function ForumPage() {
                                                 {formatTimestamp(message.created_at)}
                                             </span>
 
-                                            {/* UPDATED: Show delete button for own messages OR moderators */}
                                             {canDelete && (
                                                 <button
                                                     onClick={() => handleDeleteMessage(message.id, message.user_id)}
@@ -556,29 +532,3 @@ function ForumPage() {
 }
 
 export default ForumPage;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -1,5 +1,10 @@
+import { Link } from 'react-router-dom';
+import { Shield } from 'lucide-react';
+import { useCurrentUserData } from '../hooks/useCurrentUserData';
 
 function NavBar({children}){ 
+    const { currentUserData } = useCurrentUserData(); 
+
     return( 
         <> 
         <header className="bg-[#09090B] text-[#F9F4F4] fixed top-0 z-50 w-full "> 
@@ -15,16 +20,18 @@ function NavBar({children}){
            </div>  
 
            <div className="flex item-center pr-4 gap-8"> 
+            {currentUserData?.user_role === 'admin' && (
+                <Link to="/admin" className="text-[#F9F4F4] hover:text-[#00A6FB] flex items-center gap-1">
+                    <Shield size={16} />
+                    Admin
+                </Link>
+            )}
             {children} 
            </div>
         </div>
         </header>
-        
-        
         </>
     )
-
-
-} 
+}
 
 export default NavBar

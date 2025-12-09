@@ -18,20 +18,20 @@ function AdminDashboard() {
     const [loading, setLoading] = useState(true);
     const [actionLoading, setActionLoading] = useState(false);
     
-    // Modal states
+   
     const [showBanModal, setShowBanModal] = useState(false);
     const [showMuteModal, setShowMuteModal] = useState(false);
     const [showRoleModal, setShowRoleModal] = useState(false);
     
-    // Form states
+    
     const [banReason, setBanReason] = useState('');
     const [muteReason, setMuteReason] = useState('');
     const [muteDuration, setMuteDuration] = useState(30);
     
-    // User role state
+    
     const [currentUserRole, setCurrentUserRole] = useState(null);
 
-    // Check if current user is admin
+   
     useEffect(() => {
         const checkAdminStatus = async () => {
             if (!user) return;
@@ -55,7 +55,7 @@ function AdminDashboard() {
         }
     }, [user, isLoaded, navigate]);
 
-    // Fetch all users
+  
     useEffect(() => {
         const fetchUsers = async () => {
             setLoading(true);
@@ -103,7 +103,7 @@ function AdminDashboard() {
             console.error('Error banning user:', error);
             alert('Failed to ban user');
         } else {
-            // Log moderation action
+            
             await supabase.from('moderation_actions').insert({
                 moderator_clerk_id: user.id,
                 target_clerk_id: selectedUser.clerk_user_id,
@@ -111,7 +111,7 @@ function AdminDashboard() {
                 reason: banReason
             });
 
-            // Update local state
+           
             setUsers(users.map(u =>
                 u.clerk_user_id === selectedUser.clerk_user_id
                     ? { ...u, is_banned: true, ban_reason: banReason }
